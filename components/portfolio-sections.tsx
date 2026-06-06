@@ -276,7 +276,7 @@ const PROFILE = {
   age: "23",
   edu: "本科",
   gender: "男",
-  school: "西安外事学院",
+  school: "西安",
   major: "计算机科学与技术 · 专业排名：前14%",
   schoolPeriod: "2024.09 — 2026.06",
   location: "陕西 西安"
