@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "iDu | 杜泽民",
-  description: "杜泽民的个人作品集，聚焦 Java 后端开发基础、学习实践项目与技能展示。"
+  description: "杜泽民的个人网站，聚焦 Java 后端开发、Spring Boot、MySQL、Redis 与项目实践经历。"
 };
 
 export default function RootLayout({

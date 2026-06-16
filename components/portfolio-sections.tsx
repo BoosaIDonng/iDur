@@ -116,50 +116,51 @@ const SKILLS: Skill[] = [
   {
     badge: "JV",
     title: "Java 核心",
-    desc: "基础语法、面向对象与编码习惯",
+    desc: "基础语法、多线程基础与工程编码习惯",
     stats: [
-      { n: "2+", l: "年学习经验" },
-      { n: "14%", l: "专业排名" },
+      { n: "Java", l: "求职方向" },
+      { n: "10%", l: "专业排名" },
       { n: "2", l: "学习实践项目" }
     ],
     items: [
-      { name: "Java 基础语法 / 集合 / 异常处理", level: "掌握" },
-      { name: "面向对象基础知识", level: "了解" },
-      { name: "良好的编码能力和编码习惯", level: "能够" },
-      { name: "简单业务接口开发", level: "能够" }
+      { name: "Java 基础语法 / 集合 / 异常处理", level: "熟悉" },
+      { name: "多线程基础 / 线程池 / 常用设计模式", level: "熟悉" },
+      { name: "代码阅读能力与编码习惯", level: "能够" },
+      { name: "基础业务模块开发与接口联调", level: "能够" }
     ]
   },
   {
     badge: "BE",
-    title: "后端框架 & 数据",
-    desc: "Spring Boot + MySQL / Redis 基础应用",
+    title: "Spring 生态 & 数据库",
+    desc: "Spring Boot、MyBatis、MySQL 与 SQL 排查",
     stats: [
-      { n: "4", l: "后端框架" },
-      { n: "SQL", l: "基础增删改查" },
+      { n: "Spring", l: "后端框架" },
+      { n: "Explain", l: "SQL 排查" },
       { n: "JWT", l: "登录认证" }
     ],
     items: [
-      { name: "Spring Boot / Spring MVC 基本使用", level: "了解" },
-      { name: "MyBatis / MyBatis-Plus 接口开发", level: "了解" },
-      { name: "MySQL 增删改查 / 表结构 / 索引 / 事务", level: "熟悉" },
-      { name: "Redis 验证码 / 登录信息 / 常用数据缓存", level: "了解" },
-      { name: "RESTful 接口 / GET / POST", level: "了解" }
+      { name: "Spring / Spring Boot / MyBatis 开发流程", level: "熟悉" },
+      { name: "IoC / AOP 基本原理", level: "了解" },
+      { name: "MySQL 增删改查 / 联表查询 / 基础 SQL 优化", level: "熟悉" },
+      { name: "Explain / 慢 SQL 日志辅助定位问题", level: "能够" },
+      { name: "JWT 登录认证与 Token 续约", level: "能够" }
     ]
   },
   {
-    badge: "EN",
-    title: "工程 & AI 能力",
-    desc: "工具链、测试与 AI 辅助开发",
+    badge: "OPS",
+    title: "缓存中间件 & 工具",
+    desc: "Redis、Redisson、测试工具与部署环境",
     stats: [
-      { n: "IDEA", l: "开发工具" },
-      { n: "Postman", l: "接口测试工具" },
-      { n: "AI+", l: "辅助开发" }
+      { n: "Redis", l: "缓存应用" },
+      { n: "JMeter", l: "基础压测" },
+      { n: "Nginx", l: "运行环境" }
     ],
     items: [
-      { name: "IDEA / Maven / Git 项目运行与依赖管理", level: "能够" },
-      { name: "Postman 接口测试", level: "能够" },
-      { name: "日志与断点调试基础问题", level: "能够" },
-      { name: "DeepSeek / ChatGPT 辅助开发", level: "能够" }
+      { name: "Redis 常用数据结构与缓存使用方式", level: "了解" },
+      { name: "缓存穿透 / 击穿 / 雪崩常见问题", level: "了解" },
+      { name: "Redisson 分布式锁基础使用场景", level: "了解" },
+      { name: "Postman / JMeter 接口测试与基础压测", level: "能够" },
+      { name: "Git / IntelliJ IDEA / Nginx / MySQL", level: "能够" }
     ]
   }
 ];
@@ -181,39 +182,37 @@ interface ProjectDetail extends Project {
 const PROJECTS: ProjectDetail[] = [
   {
     idx: "01",
-    year: "2025.08 — 2025.10",
-    period: "2025.08 — 2025.10",
-    role: "后端开发学习实践",
-    title: "星评服务系统项目",
-    tags: ["Spring Boot", "MySQL", "MyBatis", "Redis", "Postman"],
+    year: "2025.12 — 2026.02",
+    period: "2025.12 — 2026.02",
+    role: "后端开发",
+    title: "智享生活平台",
+    tags: ["Spring Boot", "MySQL", "MyBatis", "Redis", "JWT", "Spring Task", "WebSocket", "Nginx"],
     desc:
-      "该项目是一个点评类服务系统，主要包括用户登录、商户信息展示、笔记发布、点赞、关注等功能。用户可以查看商户信息，发布笔记内容，并对内容进行点赞和关注操作。",
+      "项目包含后台管理端和用户端，支持商品管理、订单处理、优惠券发放、菜品浏览、下单、支付等功能。",
     highlights: [
-      "参与用户登录、商户查询、笔记发布、点赞关注等基础接口开发。",
-      "使用 Spring Boot 编写后端接口，使用 MyBatis 操作 MySQL 数据库。",
-      "完成用户表、商户表、笔记表、点赞表等相关数据的基础增删改查。",
-      "使用 Redis 存储验证码、登录用户信息等简单数据。",
-      "完成笔记发布、笔记列表查询、点赞笔记、关注用户等功能。",
-      "使用 Postman 进行接口测试，对空指针、参数错误、SQL 错误等常见问题进行排查和修改。"
+      "参与登录认证、商品管理、购物车、下单等模块的后端接口开发。",
+      "基于 JWT 完成登录认证和 Token 续约；在项目中接触 AES 加密、接口限流等安全处理方式。",
+      "使用 Spring Task 实现超时订单自动关闭，使用 WebSocket 完成来单提醒等消息推送功能。",
+      "结合慢 SQL 日志和 Explain 排查部分查询性能问题，了解联合索引、覆盖索引等常见优化方式。",
+      "参与接口测试、异常处理和问题排查，配合 Spring AOP 统一返回错误码。"
     ]
   },
   {
     idx: "02",
-    year: "2025.04 — 2025.06",
-    period: "2025.04 — 2025.06",
-    role: "后端开发学习实践",
+    year: "2025.03 — 2025.08",
+    period: "2025.03 — 2025.08",
+    role: "后端开发",
     title: "租满意租房平台",
-    tags: ["Spring Boot", "MySQL", "MyBatis-Plus", "Redis", "JWT"],
+    tags: ["Spring", "Spring Boot", "MySQL", "MyBatis-Plus", "Redis", "JWT", "Nginx", "Redisson", "Postman", "JMeter"],
     desc:
-      "该项目是一个房屋租赁类平台，主要包括用户端和后台管理端。用户端支持房源浏览、公寓详情查看、预约申请；后台管理端支持房源、公寓、用户、预约信息等基础管理功能。",
+      "项目面向租房场景，提供房源搜索、在线预约等用户功能，并支持后台房源管理、订单处理和用户管理。",
     highlights: [
-      "参与房源信息、公寓信息、预约信息等模块的后端接口开发。",
-      "使用 Spring Boot 搭建基础后端服务，按照 Controller、Service、Mapper 分层结构完成代码编写。",
-      "使用 MyBatis-Plus 完成数据库增删改查、条件查询和分页查询。",
-      "根据业务需求维护部分数据表，如用户表、房源表、预约表等。",
-      "使用 JWT 实现简单用户登录认证流程，完成登录后返回 token 的基础功能。",
-      "使用 Redis 缓存部分常用数据，如房源分类、登录信息等。",
-      "使用 Postman 测试接口，通过日志和断点调试排查并修改基础问题。"
+      "参与公寓信息管理、用户管理、租赁信息管理，以及找房信息、公寓详情、预约等模块开发。",
+      "基于 JWT 完成登录认证功能，了解敏感数据处理和接口限流的基本思路。",
+      "使用 MyBatis-Plus QueryWrapper 构建动态 SQL，结合 Spring 事务完成基础业务逻辑开发。",
+      "使用 Explain 与索引优化方式排查房源统计、报表查询中的部分性能问题。",
+      "了解 Redisson 在接口幂等、防止重复预约场景中的基本使用方式。",
+      "使用 Postman、JMeter 进行接口测试和基础压测，通过日志分析、断点调试协助定位问题。"
     ]
   }
 ];
@@ -228,17 +227,17 @@ const COLLAB_CARDS: CollabCard[] = [
   {
     icon: IconPuzzle,
     title: "后端接口开发",
-    desc: "能够按照 Controller、Service、Mapper 分层完成简单业务接口开发"
+    desc: "能够参与登录认证、商品、订单、预约等基础业务模块的接口开发与联调"
   },
   {
     icon: IconZap,
-    title: "数据库与缓存",
-    desc: "能够完成 MySQL 基础增删改查、条件查询、分页查询与 Redis 简单缓存"
+    title: "数据库与性能排查",
+    desc: "能够使用 MySQL、Explain、慢 SQL 日志定位部分查询问题并理解常见索引优化方式"
   },
   {
     icon: IconBot,
-    title: "AI 辅助开发",
-    desc: "能够合理使用 DeepSeek、ChatGPT 辅助代码编写、问题排查及技术方案梳理"
+    title: "测试与问题定位",
+    desc: "能够使用 Postman、JMeter、日志分析和断点调试配合完成接口测试与问题排查"
   }
 ];
 
@@ -249,7 +248,10 @@ const CONTACT_TAGS = [
   "MySQL",
   "Redis",
   "JWT",
+  "Redisson",
+  "Nginx",
   "Postman",
+  "JMeter",
   "Git"
 ];
 
@@ -270,15 +272,15 @@ const HONORS: Honor[] = [
 
 const PROFILE = {
   name: "杜泽民",
-  intent: "意向岗位：后端开发",
+  intent: "求职方向：Java 后端开发",
   phone: "157-8078-5359",
   email: "354561650@qq.com",
-  age: "23",
+  age: "23岁",
   edu: "本科",
   gender: "男",
-  school: "西安",
-  major: "计算机科学与技术 · 专业排名：前14%",
-  schoolPeriod: "2024.09 — 2026.06",
+  school: "西安外事学院",
+  major: "计算机科学与技术 · 本科 · 专业排名：前10%",
+  schoolPeriod: "2024.09 - 2026.06",
   location: "陕西 西安"
 };
 
@@ -1611,7 +1613,7 @@ export function PortfolioSections() {
                   {t(PROFILE.major)}
                 </div>
                 <p className="mt-5 text-sm text-neutral-600 leading-relaxed">
-                  {t("在校期间系统学习 Java、数据库、Web 后端开发等课程，专业排名前14%。通过两个后端学习实践项目，积累了接口开发、数据库增删改查、Redis 简单缓存、登录认证与接口测试经验。")}
+                  {t("在校期间系统学习 Java、数据库、Web 后端开发等课程，专业排名前10%。通过项目实践积累了业务模块开发、接口联调、测试与问题排查经验。")}
                 </p>
               </div>
             </div>
@@ -1670,7 +1672,7 @@ export function PortfolioSections() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <p className="text-base md:text-lg text-neutral-600 leading-relaxed max-w-xl">
-              {t("掌握 Java 后端开发基础，了解 Spring Boot、MyBatis、MySQL 等常用技术，能够从基础功能做起，持续提升代码能力与业务理解能力。欢迎实习、校招机会与合作沟通。")}
+              {t("希望从事 Java 后端开发岗位，参与过基础业务模块开发、接口联调、测试与问题排查，能够在项目中持续学习并配合完成开发任务。")}
             </p>
           </FadeIn>
         </div>
@@ -1736,7 +1738,7 @@ function ContactSection() {
 
       <FadeIn delay={0.1}>
         <p className="mt-8 md:mt-10 text-base md:text-lg text-neutral-600 leading-relaxed max-w-2xl">
-          {t("希望在实际工作中积累项目经验，提高代码能力和业务理解能力，持续提升后端开发能力。")}
+          {t("期待在真实业务中继续积累后端开发经验，扎实完成接口开发、联调测试与问题排查。")}
         </p>
       </FadeIn>
 
