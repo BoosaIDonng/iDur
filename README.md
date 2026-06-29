@@ -1,6 +1,6 @@
 # iDur
 
-一个基于 Next.js 构建的个人作品集与简历展示站点，采用黑白极简视觉风格，包含动态首屏、个人介绍、技能展示、项目经历、荣誉证书、合作意向和联系表单等模块。
+一个基于 Next.js 构建的个人作品集与简历展示站点，采用浅色点阵首屏、玻璃质感导航和响应式作品集布局，包含个人介绍、技能展示、项目经历、荣誉证书、合作意向和联系表单等模块。
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=nextdotjs)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=111111)
@@ -15,8 +15,11 @@
 ## Features
 
 - 响应式个人作品集页面，适配桌面端和移动端。
-- 黑白极简风格，包含玻璃质感导航、滚动进度和细腻动效。
-- Three.js Shader 动态首屏背景。
+- 浅色大圆角首屏，使用橙色 4x4 dithering warp 背景突出个人品牌。
+- 玻璃质感导航、滚动进度和细腻动效，适配桌面端和移动端。
+- 简历内容已更新为应届 Java 后端 / AI 应用方向。
+- Python 相关能力按“了解”级别展示。
+- Paper Design Shader 动态首屏背景。
 - Framer Motion 页面过渡、卡片悬浮和滚动进入动画。
 - 中 / EN 双语切换，主要内容支持英文展示。
 - 项目经历、技能标签、荣誉证书和联系信息集中展示。
@@ -30,7 +33,8 @@
 | UI | React 18, TypeScript |
 | Styling | Tailwind CSS, CSS Modules / inline CSS blocks |
 | Animation | Framer Motion |
-| 3D / Shader | Three.js |
+| Shader | @paper-design/shaders-react, Three.js |
+| Icons | lucide-react |
 | Tooling | ESLint, PostCSS, npm |
 
 ## Getting Started
@@ -105,7 +109,7 @@ iDur/
 - `components/huansen-page.tsx`: Page shell, hero section, intro animation and global visual composition.
 - `components/portfolio-sections.tsx`: Navigation, profile, skills, projects, honors, collaboration and contact sections.
 - `components/i18n.tsx`: Lightweight Chinese / English translation context.
-- `components/shader-animation.tsx`: Three.js shader background.
+- `components/shader-animation.tsx`: Paper Design `Dithering` shader background.
 - `components/portfolio-enhancers.tsx`: Scroll progress and cursor interaction enhancements.
 
 ## Deployment
