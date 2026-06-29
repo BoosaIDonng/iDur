@@ -199,7 +199,7 @@ export function HuansenPage() {
               </span>
             </div>
             <div className="subtitle">
-              Java 后端开发 ｜ 西安外事学院 · 计算机科学与技术 · 专业排名前10%
+              JAVA / 全栈 / AI应用 / Agent开发 ｜ 西安外事学院 · 计算机科学与技术
             </div>
           </div>
           <div className="scroll-indicator">

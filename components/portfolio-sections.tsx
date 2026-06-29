@@ -116,51 +116,51 @@ const SKILLS: Skill[] = [
   {
     badge: "JV",
     title: "Java 核心",
-    desc: "基础语法、多线程基础与工程编码习惯",
+    desc: "Java 17/21、并发编程与 JVM 基础",
     stats: [
-      { n: "Java", l: "求职方向" },
-      { n: "10%", l: "专业排名" },
-      { n: "2", l: "学习实践项目" }
+      { n: "17/21", l: "Java 版本" },
+      { n: "JVM", l: "运行机制" },
+      { n: "GC", l: "基础算法" }
     ],
     items: [
-      { name: "Java 基础语法 / 集合 / 异常处理", level: "熟悉" },
-      { name: "多线程基础 / 线程池 / 常用设计模式", level: "熟悉" },
-      { name: "代码阅读能力与编码习惯", level: "能够" },
-      { name: "基础业务模块开发与接口联调", level: "能够" }
+      { name: "Java 核心语法 / 集合 / IO 流", level: "熟悉" },
+      { name: "多线程 / 并发编程 / 线程池", level: "熟悉" },
+      { name: "JVM 原理与 GC 算法", level: "熟悉" },
+      { name: "Python 常见语法", level: "了解" }
     ]
   },
   {
     badge: "BE",
-    title: "Spring 生态 & 数据库",
-    desc: "Spring Boot、MyBatis、MySQL 与 SQL 排查",
+    title: "后端工程 & 中间件",
+    desc: "Spring 生态、数据库、缓存与消息队列",
     stats: [
-      { n: "Spring", l: "后端框架" },
-      { n: "Explain", l: "SQL 排查" },
-      { n: "JWT", l: "登录认证" }
+      { n: "Spring", l: "服务框架" },
+      { n: "MySQL", l: "性能优化" },
+      { n: "MQ", l: "异步解耦" }
     ],
     items: [
-      { name: "Spring / Spring Boot / MyBatis 开发流程", level: "熟悉" },
-      { name: "IoC / AOP 基本原理", level: "了解" },
-      { name: "MySQL 增删改查 / 联表查询 / 基础 SQL 优化", level: "熟悉" },
-      { name: "Explain / 慢 SQL 日志辅助定位问题", level: "能够" },
-      { name: "JWT 登录认证与 Token 续约", level: "能够" }
+      { name: "SpringBoot / MyBatis / MyBatis-Plus", level: "熟悉" },
+      { name: "SpringCloudAlibaba 基础使用", level: "熟悉" },
+      { name: "MySQL 性能优化 / Redis 原理与缓存方案", level: "熟悉" },
+      { name: "RabbitMQ / ElasticSearch 使用与常见方案", level: "熟悉" },
+      { name: "FastAPI / Flask 基础开发", level: "了解" }
     ]
   },
   {
-    badge: "OPS",
-    title: "缓存中间件 & 工具",
-    desc: "Redis、Redisson、测试工具与部署环境",
+    badge: "AI",
+    title: "AI 应用 & Agent",
+    desc: "RAG、MCP、多 Agent 与 AI 工具链",
     stats: [
-      { n: "Redis", l: "缓存应用" },
-      { n: "JMeter", l: "基础压测" },
-      { n: "Nginx", l: "运行环境" }
+      { n: "RAG", l: "检索增强" },
+      { n: "MCP", l: "工具调用" },
+      { n: "Agent", l: "流程编排" }
     ],
     items: [
-      { name: "Redis 常用数据结构与缓存使用方式", level: "了解" },
-      { name: "缓存穿透 / 击穿 / 雪崩常见问题", level: "了解" },
-      { name: "Redisson 分布式锁基础使用场景", level: "了解" },
-      { name: "Postman / JMeter 接口测试与基础压测", level: "能够" },
-      { name: "Git / IntelliJ IDEA / Nginx / MySQL", level: "能够" }
+      { name: "LangChain4j / LangChain / RAG / Function Calling", level: "熟悉" },
+      { name: "Milvus / Chroma 向量库与混合检索", level: "熟悉" },
+      { name: "Prompt / Skills / MCP / Dify / Coze / LangGraph", level: "熟悉" },
+      { name: "ReAct / Plan-Execute-Replan 多 Agent 架构", level: "熟悉" },
+      { name: "Linux / Docker / Arthas / ELK / SkyWalking", level: "掌握" }
     ]
   }
 ];
@@ -182,37 +182,36 @@ interface ProjectDetail extends Project {
 const PROJECTS: ProjectDetail[] = [
   {
     idx: "01",
-    year: "2025.12 — 2026.02",
-    period: "2025.12 — 2026.02",
-    role: "后端开发",
-    title: "智享生活平台",
-    tags: ["Spring Boot", "MySQL", "MyBatis", "Redis", "JWT", "Spring Task", "WebSocket", "Nginx"],
+    year: "B2C 电商系统",
+    period: "项目实践",
+    role: "AI 应用开发",
+    title: "Mall 商城",
+    tags: ["SpringBoot", "SpringCloud", "RabbitMQ", "ES", "MyBatis", "MongoDB", "MySQL", "Redis", "DashScope", "Chroma"],
     desc:
-      "项目包含后台管理端和用户端，支持商品管理、订单处理、优惠券发放、菜品浏览、下单、支付等功能。",
+      "B2C 电商系统，覆盖商品、订单、会员、营销及运营管理等核心业务，支持 Docker 容器化部署，并接入大模型完成商品咨询、订单查询和售后问答。",
     highlights: [
-      "参与登录认证、商品管理、购物车、下单等模块的后端接口开发。",
-      "基于 JWT 完成登录认证和 Token 续约；在项目中接触 AES 加密、接口限流等安全处理方式。",
-      "使用 Spring Task 实现超时订单自动关闭，使用 WebSocket 完成来单提醒等消息推送功能。",
-      "结合慢 SQL 日志和 Explain 排查部分查询性能问题，了解联合索引、覆盖索引等常见优化方式。",
-      "参与接口测试、异常处理和问题排查，配合 Spring AOP 统一返回错误码。"
+      "利用 Redis Lua 脚本实现秒杀库存原子扣减，结合分布式锁与 MQ 异步解耦保证数据一致性。",
+      "设计缓存穿透、击穿防护策略，通过缓存空对象、互斥锁和逻辑过期降低数据库请求压力。",
+      "采用 Gateway + Sentinel 实现限流、熔断与降级策略，支撑高并发访问场景。",
+      "负责 ElasticSearch 商品与攻略索引建模、查询性能优化及基于用户行为的智能推荐。",
+      "基于 DashScope 接入通义千问，结合 Chroma 实现商品咨询、订单查询和售后问题自动解答。"
     ]
   },
   {
     idx: "02",
-    year: "2025.03 — 2025.08",
-    period: "2025.03 — 2025.08",
-    role: "后端开发",
-    title: "租满意租房平台",
-    tags: ["Spring", "Spring Boot", "MySQL", "MyBatis-Plus", "Redis", "JWT", "Nginx", "Redisson", "Postman", "JMeter"],
+    year: "旅游助手系统",
+    period: "项目实践",
+    role: "Agent 开发",
+    title: "智旅云图",
+    tags: ["Python", "LangChain", "FastAPI", "LangGraph", "Chroma", "MySQL", "Redis", "BGE-M3", "Qwen3-Max", "MCP"],
     desc:
-      "项目面向租房场景，提供房源搜索、在线预约等用户功能，并支持后台房源管理、订单处理和用户管理。",
+      "旅游助手系统，用于解决旅游信息零散、行程规划繁琐问题，支持个性化智能行程生成与文旅信息问答服务。",
     highlights: [
-      "参与公寓信息管理、用户管理、租赁信息管理，以及找房信息、公寓详情、预约等模块开发。",
-      "基于 JWT 完成登录认证功能，了解敏感数据处理和接口限流的基本思路。",
-      "使用 MyBatis-Plus QueryWrapper 构建动态 SQL，结合 Spring 事务完成基础业务逻辑开发。",
-      "使用 Explain 与索引优化方式排查房源统计、报表查询中的部分性能问题。",
-      "了解 Redisson 在接口幂等、防止重复预约场景中的基本使用方式。",
-      "使用 Postman、JMeter 进行接口测试和基础压测，通过日志分析、断点调试协助定位问题。"
+      "基于通义千问与高德 MCP 自研 MCP-Service 工具基座，参与多角色协同旅游规划 Agent 系统设计。",
+      "基于 FastAPI 与 LangGraph 搭建多 Agent 工作流，实现景点、天气、酒店等 Agent 协同调度。",
+      "设计 Agent 检索纠错与工具重试机制，结合 RAG 进行结果校验与补全。",
+      "采用 SimHash、MinHash、TF-IDF 组合去重策略处理旅游知识库文本数据。",
+      "结合 BM25、BGE-M3 混合检索、RRF 融合与 Rerank 精排，优化问答匹配效率。"
     ]
   }
 ];
@@ -226,33 +225,36 @@ interface CollabCard {
 const COLLAB_CARDS: CollabCard[] = [
   {
     icon: IconPuzzle,
-    title: "后端接口开发",
-    desc: "能够参与登录认证、商品、订单、预约等基础业务模块的接口开发与联调"
+    title: "Java 全栈开发",
+    desc: "能够围绕 Spring 生态完成后端接口、数据访问、缓存中间件与部分前端页面联调"
   },
   {
     icon: IconZap,
-    title: "数据库与性能排查",
-    desc: "能够使用 MySQL、Explain、慢 SQL 日志定位部分查询问题并理解常见索引优化方式"
+    title: "AI 应用落地",
+    desc: "能够结合大模型、向量库、RAG 与 Function Calling 构建业务问答和智能推荐能力"
   },
   {
     icon: IconBot,
-    title: "测试与问题定位",
-    desc: "能够使用 Postman、JMeter、日志分析和断点调试配合完成接口测试与问题排查"
+    title: "Agent 工作流",
+    desc: "能够基于 LangGraph、MCP 与多 Agent 架构完成工具调用、任务编排和结果校验"
   }
 ];
 
 const CONTACT_TAGS = [
   "Java",
   "Spring Boot",
-  "MyBatis-Plus",
+  "SpringCloud",
   "MySQL",
   "Redis",
-  "JWT",
-  "Redisson",
-  "Nginx",
-  "Postman",
-  "JMeter",
-  "Git"
+  "RabbitMQ",
+  "ElasticSearch",
+  "Python",
+  "FastAPI",
+  "LangChain",
+  "LangGraph",
+  "RAG",
+  "MCP",
+  "Docker"
 ];
 
 interface Honor {
@@ -263,25 +265,43 @@ interface Honor {
 }
 const HONORS: Honor[] = [
   {
-    title: "计算机二级证书",
-    year: "2024",
-    issuer: "教育部考试中心",
-    detail: "全国计算机等级考试 Level 2，掌握基础编程与办公软件应用能力。"
+    title: "软件设计与开发竞赛校级一等奖",
+    year: "校级",
+    issuer: "西安外事学院",
+    detail: "软件设计与开发竞赛一等奖，体现工程实现与项目交付能力。"
+  },
+  {
+    title: "学院程序设计竞赛一等奖",
+    year: "学院",
+    issuer: "计算机学院",
+    detail: "程序设计竞赛一等奖，体现算法基础、编码能力与问题拆解能力。"
+  },
+  {
+    title: "校园实践大赛一等奖",
+    year: "软件开发类",
+    issuer: "西安外事学院",
+    detail: "校园实践大赛软件开发类一等奖，体现项目实践与综合应用能力。"
+  },
+  {
+    title: "蓝桥杯一等奖",
+    year: "竞赛",
+    issuer: "蓝桥杯大赛组委会",
+    detail: "蓝桥杯一等奖，体现程序设计基础与竞赛实践能力。"
   }
 ];
 
 const PROFILE = {
   name: "杜泽民",
-  intent: "求职方向：Java 后端开发",
+  intent: "求职方向：JAVA / 全栈 / AI应用 / Agent开发",
   phone: "157-8078-5359",
   email: "354561650@qq.com",
   age: "23岁",
   edu: "本科",
   gender: "男",
   school: "西安外事学院",
-  major: "计算机科学与技术 · 本科 · 专业排名：前10%",
-  schoolPeriod: "2024.09 - 2026.06",
-  location: "陕西 西安"
+  major: "计算机科学与技术 · 本科",
+  schoolPeriod: "2024 - 2026",
+  location: "陕西"
 };
 
 /* =========================================================================
@@ -497,26 +517,26 @@ const GLASS_NAV_CSS = `
   font-size: 12px;
 }
 
-.portfolio-nav--dark .glass-radio-group {
-  background: rgba(255, 255, 255, 0.08);
+.portfolio-nav--hero .glass-radio-group {
+  background: rgba(255, 255, 255, 0.56);
   box-shadow:
-    inset 1px 1px 2px rgba(255, 255, 255, 0.08),
-    inset -1px -1px 2px rgba(0, 0, 0, 0.18),
-    0 2px 14px rgba(0, 0, 0, 0.16);
+    inset 1px 1px 2px rgba(255, 255, 255, 0.72),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.05),
+    0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.portfolio-nav--dark .glass-radio-item {
-  color: rgba(255, 255, 255, 0.62);
+.portfolio-nav--hero .glass-radio-item {
+  color: rgba(18, 18, 18, 0.58);
 }
-.portfolio-nav--dark .glass-radio-item:hover { color: #fff; }
-.portfolio-nav--dark .glass-radio-item.is-active { color: #fff; }
+.portfolio-nav--hero .glass-radio-item:hover { color: #111; }
+.portfolio-nav--hero .glass-radio-item.is-active { color: #000; }
 
-.portfolio-nav--dark .glass-glider {
-  background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.09));
+.portfolio-nav--hero .glass-glider {
+  background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(242,242,238,0.9));
   box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.22),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.16);
+    0 8px 18px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.75),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.04);
 }
 `;
 
@@ -556,7 +576,7 @@ export function PortfolioNav() {
     <header
       className={`portfolio-nav fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-500 ${
         isHeroActive
-          ? "portfolio-nav--dark bg-black/[0.18] border-white/10 shadow-[inset_0_-1px_0_rgba(255,255,255,0.06)]"
+          ? "portfolio-nav--hero bg-white/[0.74] border-black/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]"
           : "bg-white/[0.72] border-black/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]"
       }`}
     >
@@ -569,9 +589,7 @@ export function PortfolioNav() {
         {/* Logo */}
         <button
           onClick={() => onJump("heroSection")}
-          className={`text-xl font-black tracking-tight transition-colors duration-500 ${
-            isHeroActive ? "text-white" : "text-black"
-          }`}
+          className="text-xl font-black tracking-tight text-black transition-colors duration-500"
           aria-label="返回首页"
         >
           DUZEMIN
@@ -611,9 +629,7 @@ export function PortfolioNav() {
         {/* 右侧：位置 + 语言 */}
         <div className="hidden md:flex items-center gap-4">
           <span
-            className={`text-xs tracking-wider flex items-center gap-1.5 transition-colors duration-500 ${
-              isHeroActive ? "text-white/[0.62]" : "text-neutral-500"
-            }`}
+            className="text-xs tracking-wider flex items-center gap-1.5 text-neutral-500 transition-colors duration-500"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             {t("陕西 西安")}
@@ -622,8 +638,8 @@ export function PortfolioNav() {
             <span
               className={`transition-colors ${
                 lang === "EN"
-                  ? `${isHeroActive ? "text-white" : "text-black"} font-semibold`
-                  : `${isHeroActive ? "text-white/[0.42]" : "text-neutral-400"}`
+                  ? "text-black font-semibold"
+                  : "text-neutral-400"
               }`}
             >
               EN
@@ -654,8 +670,8 @@ export function PortfolioNav() {
             <span
               className={`transition-colors ${
                 lang === "中"
-                  ? `${isHeroActive ? "text-white" : "text-black"} font-semibold`
-                  : `${isHeroActive ? "text-white/[0.42]" : "text-neutral-400"}`
+                  ? "text-black font-semibold"
+                  : "text-neutral-400"
               }`}
             >
               中
@@ -669,7 +685,7 @@ export function PortfolioNav() {
             onClick={() => setLang(lang === "EN" ? "中" : "EN")}
             className={`h-8 min-w-12 rounded-full border px-3 text-xs font-semibold transition-colors ${
               isHeroActive
-                ? "border-white/15 bg-white/[0.08] text-white"
+                ? "border-black/10 bg-white/[0.78] text-black"
                 : "border-black/10 bg-white/[0.74] text-black"
             }`}
             aria-label="语言切换：EN / 中"
@@ -1613,7 +1629,7 @@ export function PortfolioSections() {
                   {t(PROFILE.major)}
                 </div>
                 <p className="mt-5 text-sm text-neutral-600 leading-relaxed">
-                  {t("在校期间系统学习 Java、数据库、Web 后端开发等课程，专业排名前10%。通过项目实践积累了业务模块开发、接口联调、测试与问题排查经验。")}
+                  {t("在校期间系统学习计算机科学与技术相关课程，结合竞赛与项目实践积累了 Java 全栈、AI 应用、RAG 检索和 Agent 编排经验。")}
                 </p>
               </div>
             </div>
@@ -1672,7 +1688,7 @@ export function PortfolioSections() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <p className="text-base md:text-lg text-neutral-600 leading-relaxed max-w-xl">
-              {t("希望从事 Java 后端开发岗位，参与过基础业务模块开发、接口联调、测试与问题排查，能够在项目中持续学习并配合完成开发任务。")}
+              {t("面向 JAVA 全栈、AI 应用与 Agent 开发方向，能够围绕 Spring 生态、数据库缓存、消息队列、大模型应用和多 Agent 工作流参与项目建设。")}
             </p>
           </FadeIn>
         </div>
@@ -1738,7 +1754,7 @@ function ContactSection() {
 
       <FadeIn delay={0.1}>
         <p className="mt-8 md:mt-10 text-base md:text-lg text-neutral-600 leading-relaxed max-w-2xl">
-          {t("期待在真实业务中继续积累后端开发经验，扎实完成接口开发、联调测试与问题排查。")}
+          {t("期待围绕 Java 全栈、AI 应用和 Agent 工作流继续做有交付价值的项目，把后端工程能力和大模型应用能力结合起来。")}
         </p>
       </FadeIn>
 
@@ -1762,7 +1778,7 @@ function ContactSection() {
                 </div>
                 <div>
                   <div className="text-[11px] tracking-[0.25em] text-neutral-400">{t("意向岗位")}</div>
-                  <div className="text-base text-black">{t("Java 后端开发")}</div>
+                  <div className="text-base text-black">{t("JAVA / 全栈 / AI应用 / Agent开发")}</div>
                 </div>
               </div>
               <div className="flex items-start gap-4">
