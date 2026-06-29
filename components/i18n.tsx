@@ -48,6 +48,7 @@ export const TR: Record<string, string> = {
   "个人档案": "PROFILE",
   "意向岗位：后端开发": "Target Role: Backend Developer",
   "求职方向：Java 后端开发": "Target Role: Java Backend Developer",
+  "求职方向：JAVA / 全栈 / AI应用 / Agent开发": "Target Role: Java / Full Stack / AI Application / Agent Development",
   "电话": "Phone",
   "邮箱": "Email",
   "年龄": "Age",
@@ -57,31 +58,32 @@ export const TR: Record<string, string> = {
   "23岁": "23",
   "男": "Male",
   "坐标": "Location",
-  "计算机科学与技术 · 专业排名：前14%": "Computer Science and Technology · Top 14% in major",
-  "计算机科学与技术 · 本科 · 专业排名：前10%": "Computer Science and Technology · Bachelor · Top 10% in major",
+  "计算机科学与技术 · 本科": "Computer Science and Technology · Bachelor",
   "教育经历": "EDUCATION",
-  "在校期间系统学习 Java、数据库、Web 后端开发等课程，专业排名前14%。通过两个后端学习实践项目，积累了接口开发、数据库增删改查、Redis 简单缓存、登录认证与接口测试经验。":
-    "Studied Java, databases and web backend development, ranking in the top 14% of the major. Through two backend practice projects, gained experience in API development, database CRUD, simple Redis caching, login authentication and API testing.",
-  "在校期间系统学习 Java、数据库、Web 后端开发等课程，专业排名前10%。通过项目实践积累了业务模块开发、接口联调、测试与问题排查经验。":
-    "Studied Java, databases and web backend development, ranking in the top 10% of the major. Built practical experience in business module development, API integration, testing and troubleshooting.",
+  "在校期间系统学习计算机科学与技术相关课程，结合竞赛与项目实践积累了 Java 全栈、AI 应用、RAG 检索和 Agent 编排经验。":
+    "Studied computer science and technology courses, and built experience in Java full-stack development, AI applications, RAG retrieval and Agent orchestration through competitions and project practice.",
 
   // 技能卡 · 标题 & 描述
   "Java 核心": "Java Core",
   "基础语法、面向对象与编码习惯": "Syntax, OOP basics and coding habits.",
   "基础语法、多线程基础与工程编码习惯": "Syntax, multithreading basics and engineering habits.",
+  "Java 17/21、并发编程与 JVM 基础": "Java 17/21, concurrent programming and JVM basics.",
   "后端框架 & 数据": "Backend Framework & Data",
   "Spring Boot + MySQL / Redis 基础应用": "Basic use of Spring Boot, MySQL and Redis.",
   "Spring 生态 & 数据库": "Spring Ecosystem & Database",
   "Spring Boot、MyBatis、MySQL 与 SQL 排查": "Spring Boot, MyBatis, MySQL and SQL diagnostics.",
+  "后端工程 & 中间件": "Backend Engineering & Middleware",
+  "Spring 生态、数据库、缓存与消息队列": "Spring ecosystem, databases, cache and message queues.",
   "工程 & AI 能力": "Engineering & AI",
   "工具链、测试与 AI 辅助开发": "Toolchain, testing and AI-assisted development.",
   "缓存中间件 & 工具": "Cache Middleware & Tools",
   "Redis、Redisson、测试工具与部署环境": "Redis, Redisson, testing tools and runtime environment.",
+  "AI 应用 & Agent": "AI Applications & Agents",
+  "RAG、MCP、多 Agent 与 AI 工具链": "RAG, MCP, multi-Agent systems and AI toolchains.",
 
   // 技能卡 · stats 标签
   "年学习经验": "Years of study",
   "求职方向": "Target role",
-  "专业排名": "Major rank",
   "学习实践项目": "Practice projects",
   "后端框架": "Backend frameworks",
   "基础增删改查": "Basic CRUD",
@@ -93,10 +95,23 @@ export const TR: Record<string, string> = {
   "缓存应用": "Cache usage",
   "基础压测": "Basic load testing",
   "运行环境": "Runtime environment",
+  "Java 版本": "Java versions",
+  "运行机制": "Runtime mechanics",
+  "基础算法": "Basic algorithms",
+  "服务框架": "Service frameworks",
+  "性能优化": "Performance optimization",
+  "异步解耦": "Async decoupling",
+  "检索增强": "Retrieval augmentation",
+  "工具调用": "Tool calling",
+  "流程编排": "Workflow orchestration",
 
   // 技能卡 · items
   "Java 基础语法 / 集合 / 异常处理": "Java syntax, collections and exception handling",
+  "Java 核心语法 / 集合 / IO 流": "Java core syntax, collections and IO streams",
   "多线程基础 / 线程池 / 常用设计模式": "Multithreading basics, thread pools and common design patterns",
+  "多线程 / 并发编程 / 线程池": "Multithreading, concurrent programming and thread pools",
+  "JVM 原理与 GC 算法": "JVM principles and GC algorithms",
+  "Python 常见语法": "Common Python syntax",
   "代码阅读能力与编码习惯": "Code reading ability and coding habits",
   "基础业务模块开发与接口联调": "Basic business module development and API integration",
   "面向对象基础知识": "Object-oriented programming basics",
@@ -104,10 +119,15 @@ export const TR: Record<string, string> = {
   "简单业务接口开发": "Simple business API development",
   "Spring Boot / Spring MVC 基本使用": "Basic use of Spring Boot / Spring MVC",
   "Spring / Spring Boot / MyBatis 开发流程": "Spring, Spring Boot and MyBatis development workflow",
+  "SpringBoot / MyBatis / MyBatis-Plus": "SpringBoot / MyBatis / MyBatis-Plus",
+  "SpringCloudAlibaba 基础使用": "Basic SpringCloudAlibaba usage",
   "IoC / AOP 基本原理": "Basic principles of IoC and AOP",
   "MyBatis / MyBatis-Plus 接口开发": "API development with MyBatis / MyBatis-Plus",
   "MySQL 增删改查 / 表结构 / 索引 / 事务": "MySQL CRUD, table design, indexes and transactions",
   "MySQL 增删改查 / 联表查询 / 基础 SQL 优化": "MySQL CRUD, joins and basic SQL optimization",
+  "MySQL 性能优化 / Redis 原理与缓存方案": "MySQL performance optimization, Redis principles and cache strategies",
+  "RabbitMQ / ElasticSearch 使用与常见方案": "RabbitMQ / ElasticSearch usage and common solutions",
+  "FastAPI / Flask 基础开发": "Basic development with FastAPI / Flask",
   "Explain / 慢 SQL 日志辅助定位问题": "Use Explain and slow SQL logs to locate issues",
   "JWT 登录认证与 Token 续约": "JWT login authentication and token renewal",
   "Redis 验证码 / 登录信息 / 常用数据缓存": "Redis for verification codes, login data and simple caching",
@@ -121,6 +141,11 @@ export const TR: Record<string, string> = {
   "Git / IntelliJ IDEA / Nginx / MySQL": "Git / IntelliJ IDEA / Nginx / MySQL",
   "日志与断点调试基础问题": "Basic troubleshooting with logs and breakpoints",
   "DeepSeek / ChatGPT 辅助开发": "DeepSeek / ChatGPT assisted development",
+  "LangChain4j / LangChain / RAG / Function Calling": "LangChain4j / LangChain / RAG / Function Calling",
+  "Milvus / Chroma 向量库与混合检索": "Milvus / Chroma vector databases and hybrid retrieval",
+  "Prompt / Skills / MCP / Dify / Coze / LangGraph": "Prompt / Skills / MCP / Dify / Coze / LangGraph",
+  "ReAct / Plan-Execute-Replan 多 Agent 架构": "ReAct / Plan-Execute-Replan multi-Agent architecture",
+  "Linux / Docker / Arthas / ELK / SkyWalking": "Linux / Docker / Arthas / ELK / SkyWalking",
 
   // 熟练度
   "掌握": "Solid",
@@ -135,71 +160,56 @@ export const TR: Record<string, string> = {
   // 项目
   "后端开发": "Backend Dev",
   "后端开发学习实践": "Backend Dev Practice",
-  "智享生活平台": "Zhixiang Life Platform",
-  "项目包含后台管理端和用户端，支持商品管理、订单处理、优惠券发放、菜品浏览、下单、支付等功能。":
-    "A platform with admin and user sides, supporting product management, order handling, coupon distribution, dish browsing, ordering and payment.",
-  "参与登录认证、商品管理、购物车、下单等模块的后端接口开发。":
-    "Participated in backend API development for login authentication, product management, shopping cart and ordering modules.",
-  "基于 JWT 完成登录认证和 Token 续约；在项目中接触 AES 加密、接口限流等安全处理方式。":
-    "Implemented JWT-based login authentication and token renewal; worked with security approaches such as AES encryption and API rate limiting.",
-  "使用 Spring Task 实现超时订单自动关闭，使用 WebSocket 完成来单提醒等消息推送功能。":
-    "Used Spring Task to automatically close timed-out orders and WebSocket for incoming-order notifications.",
-  "结合慢 SQL 日志和 Explain 排查部分查询性能问题，了解联合索引、覆盖索引等常见优化方式。":
-    "Used slow SQL logs and Explain to diagnose selected query performance issues, learning common optimizations such as composite and covering indexes.",
-  "参与接口测试、异常处理和问题排查，配合 Spring AOP 统一返回错误码。":
-    "Participated in API testing, exception handling and troubleshooting, and worked with Spring AOP for unified error codes.",
-  "星评服务系统项目": "Star Review Service Project",
-  "该项目是一个点评类服务系统，主要包括用户登录、商户信息展示、笔记发布、点赞、关注等功能。用户可以查看商户信息，发布笔记内容，并对内容进行点赞和关注操作。":
-    "A review service system covering user login, merchant information display, note publishing, likes and follow actions. Users can view merchants, publish notes, and like or follow content.",
-  "参与用户登录、商户查询、笔记发布、点赞关注等基础接口开发。":
-    "Participated in basic API development for user login, merchant lookup, note publishing, likes and follow actions.",
-  "使用 Spring Boot 编写后端接口，使用 MyBatis 操作 MySQL 数据库。":
-    "Built backend APIs with Spring Boot and operated MySQL through MyBatis.",
-  "完成用户表、商户表、笔记表、点赞表等相关数据的基础增删改查。":
-    "Completed basic CRUD for user, merchant, note and like tables.",
-  "使用 Redis 存储验证码、登录用户信息等简单数据。":
-    "Used Redis to store simple data such as verification codes and logged-in user information.",
-  "完成笔记发布、笔记列表查询、点赞笔记、关注用户等功能。":
-    "Completed note publishing, note list querying, note liking and user follow features.",
-  "使用 Postman 进行接口测试，对空指针、参数错误、SQL 错误等常见问题进行排查和修改。":
-    "Used Postman for API testing and fixed common issues such as null pointers, parameter errors and SQL errors.",
-
-  "租满意租房平台": "ZuManYi Rental Platform",
-  "项目面向租房场景，提供房源搜索、在线预约等用户功能，并支持后台房源管理、订单处理和用户管理。":
-    "A rental platform for housing scenarios, providing listing search and online appointments for users, with admin support for listing, order and user management.",
-  "参与公寓信息管理、用户管理、租赁信息管理，以及找房信息、公寓详情、预约等模块开发。":
-    "Participated in modules for apartment information management, user management, lease information, listing search, apartment details and appointments.",
-  "基于 JWT 完成登录认证功能，了解敏感数据处理和接口限流的基本思路。":
-    "Implemented JWT-based login authentication and learned basic approaches for sensitive data handling and API rate limiting.",
-  "使用 MyBatis-Plus QueryWrapper 构建动态 SQL，结合 Spring 事务完成基础业务逻辑开发。":
-    "Used MyBatis-Plus QueryWrapper to build dynamic SQL and Spring transactions for basic business logic.",
-  "使用 Explain 与索引优化方式排查房源统计、报表查询中的部分性能问题。":
-    "Used Explain and index optimization methods to diagnose selected performance issues in listing statistics and report queries.",
-  "了解 Redisson 在接口幂等、防止重复预约场景中的基本使用方式。":
-    "Learned basic Redisson usage in API idempotency and duplicate appointment prevention scenarios.",
-  "使用 Postman、JMeter 进行接口测试和基础压测，通过日志分析、断点调试协助定位问题。":
-    "Used Postman and JMeter for API testing and basic load testing, locating issues through log analysis and breakpoint debugging.",
-  "该项目是一个房屋租赁类平台，主要包括用户端和后台管理端。用户端支持房源浏览、公寓详情查看、预约申请；后台管理端支持房源、公寓、用户、预约信息等基础管理功能。":
-    "A rental platform with user and admin sides. The user side supports listing browsing, apartment details and appointment requests; the admin side supports basic management of listings, apartments, users and appointments.",
-  "参与房源信息、公寓信息、预约信息等模块的后端接口开发。":
-    "Participated in backend API development for listing, apartment and appointment modules.",
-  "使用 Spring Boot 搭建基础后端服务，按照 Controller、Service、Mapper 分层结构完成代码编写。":
-    "Built basic backend services with Spring Boot and followed the Controller, Service and Mapper layered structure.",
-  "使用 MyBatis-Plus 完成数据库增删改查、条件查询和分页查询。":
-    "Used MyBatis-Plus for CRUD, conditional queries and pagination.",
-  "根据业务需求维护部分数据表，如用户表、房源表、预约表等。":
-    "Maintained selected data tables such as users, listings and appointments according to business needs.",
-  "使用 JWT 实现简单用户登录认证流程，完成登录后返回 token 的基础功能。":
-    "Implemented a simple JWT login authentication flow and returned a token after login.",
-  "使用 Redis 缓存部分常用数据，如房源分类、登录信息等。":
-    "Used Redis to cache common data such as listing categories and login information.",
-  "使用 Postman 测试接口，通过日志和断点调试排查并修改基础问题。":
-    "Tested APIs with Postman and used logs and breakpoints to locate and fix basic issues.",
-
+  "AI 应用开发": "AI Application Development",
+  "Agent 开发": "Agent Development",
+  "项目实践": "Project Practice",
+  "Mall 商城": "Mall E-commerce Platform",
+  "B2C 电商系统，覆盖商品、订单、会员、营销及运营管理等核心业务，支持 Docker 容器化部署，并接入大模型完成商品咨询、订单查询和售后问答。":
+    "A B2C e-commerce system covering products, orders, members, marketing and operations management. It supports Docker deployment and integrates LLM capabilities for product consultation, order lookup and after-sales Q&A.",
+  "利用 Redis Lua 脚本实现秒杀库存原子扣减，结合分布式锁与 MQ 异步解耦保证数据一致性。":
+    "Used Redis Lua scripts for atomic stock deduction in flash-sale scenarios, combined with distributed locks and MQ async decoupling for data consistency.",
+  "设计缓存穿透、击穿防护策略，通过缓存空对象、互斥锁和逻辑过期降低数据库请求压力。":
+    "Designed cache penetration and breakdown protection using empty-object caching, mutex locks and logical expiration to reduce database pressure.",
+  "采用 Gateway + Sentinel 实现限流、熔断与降级策略，支撑高并发访问场景。":
+    "Used Gateway and Sentinel to implement rate limiting, circuit breaking and fallback strategies for high-concurrency access.",
+  "负责 ElasticSearch 商品与攻略索引建模、查询性能优化及基于用户行为的智能推荐。":
+    "Handled ElasticSearch index modeling for products and guides, query performance optimization and behavior-based intelligent recommendation.",
+  "基于 DashScope 接入通义千问，结合 Chroma 实现商品咨询、订单查询和售后问题自动解答。":
+    "Integrated Qwen through DashScope and used Chroma for automated product consultation, order lookup and after-sales Q&A.",
+  "智旅云图": "Smart Travel Map",
+  "旅游助手系统，用于解决旅游信息零散、行程规划繁琐问题，支持个性化智能行程生成与文旅信息问答服务。":
+    "A travel assistant system for fragmented travel information and complex itinerary planning, supporting personalized itinerary generation and travel Q&A.",
+  "基于通义千问与高德 MCP 自研 MCP-Service 工具基座，参与多角色协同旅游规划 Agent 系统设计。":
+    "Designed a multi-role collaborative travel planning Agent system based on Qwen and an Amap MCP-Service tool foundation.",
+  "基于 FastAPI 与 LangGraph 搭建多 Agent 工作流，实现景点、天气、酒店等 Agent 协同调度。":
+    "Built a multi-Agent workflow with FastAPI and LangGraph to coordinate attraction, weather and hotel Agents.",
+  "设计 Agent 检索纠错与工具重试机制，结合 RAG 进行结果校验与补全。":
+    "Designed Agent retrieval correction and tool retry mechanisms, using RAG for result validation and completion.",
+  "采用 SimHash、MinHash、TF-IDF 组合去重策略处理旅游知识库文本数据。":
+    "Processed travel knowledge-base text with a SimHash, MinHash and TF-IDF deduplication strategy.",
+  "结合 BM25、BGE-M3 混合检索、RRF 融合与 Rerank 精排，优化问答匹配效率。":
+    "Improved Q&A matching with BM25, BGE-M3 hybrid retrieval, RRF fusion and Rerank refinement.",
   // 荣誉
   "证书": "CERTIFICATE",
   "颁发单位": "ISSUER",
   "计算机二级证书": "NCRE Level-2 Certificate",
+  "软件设计与开发竞赛校级一等奖": "First Prize, Software Design and Development Competition",
+  "学院程序设计竞赛一等奖": "First Prize, College Programming Competition",
+  "校园实践大赛一等奖": "First Prize, Campus Practice Competition",
+  "蓝桥杯一等奖": "First Prize, Lanqiao Cup",
+  "校级": "University Level",
+  "学院": "College Level",
+  "软件开发类": "Software Development",
+  "竞赛": "Competition",
+  "蓝桥杯大赛组委会": "Lanqiao Cup Organizing Committee",
+  "软件设计与开发竞赛一等奖，体现工程实现与项目交付能力。":
+    "First prize in the software design and development competition, demonstrating engineering implementation and project delivery ability.",
+  "程序设计竞赛一等奖，体现算法基础、编码能力与问题拆解能力。":
+    "First prize in the programming competition, demonstrating algorithm basics, coding ability and problem decomposition.",
+  "校园实践大赛软件开发类一等奖，体现项目实践与综合应用能力。":
+    "First prize in the software development category of the campus practice competition, demonstrating project practice and applied engineering ability.",
+  "蓝桥杯一等奖，体现程序设计基础与竞赛实践能力。":
+    "First prize in the Lanqiao Cup, demonstrating programming fundamentals and competition practice.",
   "校级三好学生": "Outstanding Student (University)",
   "项目实战奖": "Project Practice Award",
   "教育部考试中心": "Ministry of Education Testing Center",
@@ -213,12 +223,14 @@ export const TR: Record<string, string> = {
     "Completed backend project assignments across multiple practical courses with positive recognition.",
 
   // 合作
-  "专注 Java 后端开发，熟悉 Spring Boot 生态与 MySQL / Redis 落地，擅长结合 AI 工具提升开发效率。欢迎实习、校招机会与合作沟通。":
-    "Focused on Java backend development with solid experience in Spring Boot, MySQL and Redis. Skilled at leveraging AI tooling for efficiency. Open to internships, new-grad offers and collaborations.",
-  "掌握 Java 后端开发基础，了解 Spring Boot、MyBatis、MySQL 等常用技术，能够从基础功能做起，持续提升代码能力与业务理解能力。欢迎实习、校招机会与合作沟通。":
-    "I have a foundation in Java backend development, understand common technologies such as Spring Boot, MyBatis and MySQL, and am ready to start from basic features while improving coding ability and business understanding. Open to internships, campus recruiting opportunities and collaboration.",
+  "专注 Java 后端开发，熟悉 Spring Boot 生态与 MySQL / Redis 落地，擅长结合 AI 工具提升开发效率。欢迎校招机会与项目沟通。":
+    "Focused on Java backend development with solid experience in Spring Boot, MySQL and Redis. Skilled at leveraging AI tooling for efficiency. Open to campus recruitment opportunities and project discussions.",
+  "掌握 Java 后端开发基础，了解 Spring Boot、MyBatis、MySQL 等常用技术，能够从基础功能做起，持续提升代码能力与业务理解能力。欢迎校招机会与项目沟通。":
+    "I have a foundation in Java backend development, understand common technologies such as Spring Boot, MyBatis and MySQL, and am ready to start from basic features while improving coding ability and business understanding. Open to campus recruitment opportunities and project discussions.",
   "希望从事 Java 后端开发岗位，参与过基础业务模块开发、接口联调、测试与问题排查，能够在项目中持续学习并配合完成开发任务。":
     "Seeking a Java backend development role. I have participated in basic business module development, API integration, testing and troubleshooting, and can keep learning while supporting delivery in real projects.",
+  "面向 JAVA 全栈、AI 应用与 Agent 开发方向，能够围绕 Spring 生态、数据库缓存、消息队列、大模型应用和多 Agent 工作流参与项目建设。":
+    "Focused on Java full-stack, AI application and Agent development, with the ability to contribute around the Spring ecosystem, databases, caching, message queues, LLM applications and multi-Agent workflows.",
   "后端接口开发": "Backend API Development",
   "能够按照 Controller、Service、Mapper 分层完成简单业务接口开发":
     "Able to build simple business APIs following the Controller, Service and Mapper layered structure.",
@@ -236,6 +248,15 @@ export const TR: Record<string, string> = {
   "测试与问题定位": "Testing & Troubleshooting",
   "能够使用 Postman、JMeter、日志分析和断点调试配合完成接口测试与问题排查":
     "Able to use Postman, JMeter, log analysis and breakpoint debugging for API testing and troubleshooting.",
+  "Java 全栈开发": "Java Full-Stack Development",
+  "能够围绕 Spring 生态完成后端接口、数据访问、缓存中间件与部分前端页面联调":
+    "Able to build around the Spring ecosystem, covering backend APIs, data access, cache middleware and selected frontend integration.",
+  "AI 应用落地": "AI Application Delivery",
+  "能够结合大模型、向量库、RAG 与 Function Calling 构建业务问答和智能推荐能力":
+    "Able to combine LLMs, vector databases, RAG and Function Calling to build business Q&A and intelligent recommendation capabilities.",
+  "Agent 工作流": "Agent Workflows",
+  "能够基于 LangGraph、MCP 与多 Agent 架构完成工具调用、任务编排和结果校验":
+    "Able to use LangGraph, MCP and multi-Agent architectures for tool calling, task orchestration and result validation.",
 
   // 联系
   "期待与志同道合的团队一起，把每一行代码写扎实，做长期有价值的后端工程。":
@@ -244,9 +265,12 @@ export const TR: Record<string, string> = {
     "I hope to gain project experience in real work, improve coding ability and business understanding, and continue growing as a backend developer.",
   "期待在真实业务中继续积累后端开发经验，扎实完成接口开发、联调测试与问题排查。":
     "Looking to keep building backend development experience in real business scenarios through solid API development, integration testing and troubleshooting.",
+  "期待围绕 Java 全栈、AI 应用和 Agent 工作流继续做有交付价值的项目，把后端工程能力和大模型应用能力结合起来。":
+    "Looking forward to building deliverable projects around Java full-stack development, AI applications and Agent workflows, combining backend engineering with LLM application capability.",
   "意向岗位": "Target Role",
   "后端开发工程师": "Backend Developer",
   "Java 后端开发": "Java Backend Development",
+  "JAVA / 全栈 / AI应用 / Agent开发": "Java / Full Stack / AI Application / Agent Development",
   "技能关键词": "Skill Keywords",
   "更多联系方式": "Other Channels",
   "微信、QQ 等渠道可在邮件 / 表单沟通后进一步交换。":
