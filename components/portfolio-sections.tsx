@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type MouseEvent, type ReactNode } from "react";
-import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useTransform } from "framer-motion";
 import { useLang } from "./i18n";
 
 /* =========================================================================
@@ -116,17 +116,19 @@ const SKILLS: Skill[] = [
   {
     badge: "JV",
     title: "Java 核心",
-    desc: "Java 17/21、并发编程与 JVM 基础",
+    desc: "Java 17/21、集合与并发基础、工程实践",
     stats: [
       { n: "17/21", l: "Java 版本" },
-      { n: "JVM", l: "运行机制" },
-      { n: "GC", l: "基础算法" }
+      { n: "API", l: "核心基础" },
+      { n: "Tools", l: "工程实践" }
     ],
     items: [
-      { name: "Java 核心语法 / 集合 / IO 流", level: "熟悉" },
-      { name: "多线程 / 并发编程 / 线程池", level: "熟悉" },
-      { name: "JVM 原理与 GC 算法", level: "熟悉" },
-      { name: "Python 常见语法", level: "了解" }
+      { name: "Java 常用语法与核心 API", level: "掌握" },
+      { name: "集合框架 / I/O / 面向对象", level: "熟悉" },
+      { name: "多线程 / 线程池 / 并发编程基础", level: "了解" },
+      { name: "Python 基础语法", level: "掌握" },
+      { name: "IntelliJ IDEA / Maven / Git / JMeter / ApiPost", level: "熟悉" },
+      { name: "Linux / Docker 基础部署与日志排查", level: "能够" }
     ]
   },
   {
@@ -139,28 +141,30 @@ const SKILLS: Skill[] = [
       { n: "MQ", l: "异步解耦" }
     ],
     items: [
-      { name: "SpringBoot / MyBatis / MyBatis-Plus", level: "熟悉" },
-      { name: "SpringCloudAlibaba 基础使用", level: "熟悉" },
-      { name: "MySQL 性能优化 / Redis 原理与缓存方案", level: "熟悉" },
-      { name: "RabbitMQ / ElasticSearch 使用与常见方案", level: "熟悉" },
-      { name: "FastAPI / Flask 基础开发", level: "了解" }
+      { name: "Spring Boot / MyBatis / MyBatis-Plus", level: "熟悉" },
+      { name: "Spring Cloud / Spring Cloud Alibaba 常用组件", level: "了解" },
+      { name: "MySQL / EXPLAIN / 基础 SQL 优化", level: "熟悉" },
+      { name: "Redis 缓存 / 持久化 / 内存淘汰 / 分布式锁", level: "了解" },
+      { name: "RocketMQ / RabbitMQ / 异步解耦与消费幂等", level: "了解" },
+      { name: "XXL-Job 定时任务 / ShardingSphere 分库分表", level: "了解" }
     ]
   },
   {
     badge: "AI",
     title: "AI 应用 & Agent",
-    desc: "RAG、MCP、多 Agent 与 AI 工具链",
+    desc: "编程 Agent、工具调用与 AI 辅助开发",
     stats: [
-      { n: "RAG", l: "检索增强" },
+      { n: "ReAct", l: "任务循环" },
       { n: "MCP", l: "工具调用" },
-      { n: "Agent", l: "流程编排" }
+      { n: "Agent", l: "协作编排" }
     ],
     items: [
-      { name: "LangChain4j / LangChain / RAG / Function Calling", level: "熟悉" },
-      { name: "Milvus / Chroma 向量库与混合检索", level: "熟悉" },
-      { name: "Prompt / Skills / MCP / Dify / Coze / LangGraph", level: "熟悉" },
-      { name: "ReAct / Plan-Execute-Replan 多 Agent 架构", level: "熟悉" },
-      { name: "Linux / Docker / Arthas / ELK / SkyWalking", level: "掌握" }
+      { name: "LangChain4j / RAG / Prompt 基本概念", level: "了解" },
+      { name: "Agent Loop / ReAct / Function Calling", level: "了解" },
+      { name: "MCP / Skills / 工具按需加载", level: "了解" },
+      { name: "上下文管理 / Git Worktree / 多 Agent 协作", level: "了解" },
+      { name: "Claude Code / Codex / Cursor 辅助编码与排查", level: "能够" },
+      { name: "Vue 3 / JavaScript / Vite / Element Plus 基础联调", level: "能够" }
     ]
   }
 ];
@@ -176,42 +180,182 @@ interface Project {
 interface ProjectDetail extends Project {
   role: string;
   period: string;
-  highlights: string[];
+  link?: string;
+  headline: string;
+  flow: { title: string; desc: string }[];
+  highlights: { title: string; insight: string; desc: string; tradeoff: string }[];
+  notes: { title: string; desc: string }[];
 }
 
 const PROJECTS: ProjectDetail[] = [
   {
     idx: "01",
-    year: "B2C 电商系统",
-    period: "项目实践",
-    role: "AI 应用开发",
-    title: "Mall 商城",
-    tags: ["SpringBoot", "SpringCloud", "RabbitMQ", "ES", "MyBatis", "MongoDB", "MySQL", "Redis", "DashScope", "Chroma"],
-    desc:
-      "B2C 电商系统，覆盖商品、订单、会员、营销及运营管理等核心业务，支持 Docker 容器化部署，并接入大模型完成商品咨询、订单查询和售后问答。",
+    year: "优惠券发行与履约",
+    period: "个人项目实践",
+    role: "Java 后端开发",
+    title: "券流｜优惠券发行与履约引擎",
+    tags: [
+      "Java 17",
+      "Spring Boot 3",
+      "MyBatis-Plus",
+      "MySQL",
+      "Redis",
+      "Redisson",
+      "RocketMQ 5.x",
+      "ShardingSphere",
+      "EasyExcel",
+      "XXL-Job"
+    ],
+    link: "https://github.com/BoosaIDonng/coupon-flow-platform",
+    headline: "一份发券名单背后，是吞吐、库存与失败恢复的协同设计。",
+    desc: "面向电商营销场景，串联商家模板管理、批量与定时发券、秒杀领取，以及预约提醒、锁定核销与退款。项目重点放在两条链路：大名单如何分批发得稳，并发领取如何尽早拦截无效请求。任务进度、消息状态与最终领券结果分别处理，让中断、重试和失败明细都有明确的落点。",
+    flow: [
+      {
+        title: "任务触发",
+        desc: "即时创建 / XXL-Job 调度"
+      },
+      {
+        title: "流式解析",
+        desc: "EasyExcel 逐行读取名单"
+      },
+      {
+        title: "库存预扣",
+        desc: "Redis Lua 校验并暂存"
+      },
+      {
+        title: "批次投递",
+        desc: "RocketMQ 解耦分发处理"
+      },
+      {
+        title: "事务落库",
+        desc: "MySQL 条件更新与唯一约束"
+      }
+    ],
     highlights: [
-      "利用 Redis Lua 脚本实现秒杀库存原子扣减，结合分布式锁与 MQ 异步解耦保证数据一致性。",
-      "设计缓存穿透、击穿防护策略，通过缓存空对象、互斥锁和逻辑过期降低数据库请求压力。",
-      "采用 Gateway + Sentinel 实现限流、熔断与降级策略，支撑高并发访问场景。",
-      "负责 ElasticSearch 商品与攻略索引建模、查询性能优化及基于用户行为的智能推荐。",
-      "基于 DashScope 接入通义千问，结合 Chroma 实现商品咨询、订单查询和售后问题自动解答。"
+      {
+        title: "批量分发",
+        insight: "把大名单变成受控批次，减少逐条操作的往返开销。",
+        desc: "使用 EasyExcel 流式读取 Excel，避免整份名单同时驻留内存。解析阶段通过 Lua 将库存预扣与待发用户写入 Redis Set 放在同一次执行中，累计到批次后发送分发消息，由消费者批量写入用户券记录；解析结束时补发完成标识，处理不足一批的尾部数据。",
+        tradeoff: "流式读取解决内存占用，批处理减少网络与数据库调用，两者分别优化不同瓶颈。批次越大，单次事务与失败重试成本也越高，需要在吞吐和恢复成本之间取舍。"
+      },
+      {
+        title: "续跑追踪",
+        insight: "中断后有进度可循，失败后有原因可查。",
+        desc: "以任务维度在 Redis 中保存已处理行号，重启解析时跳过已登记输入。将库存不足、重复领取等失败行号和原因记录下来，按任务批次生成错误明细。导出采用记录 ID 游标分批读取，避免 LIMIT 大偏移量反复扫描前面的记录。",
+        tradeoff: "解析进度不代表发券已经落库。恢复点、消息消费状态和数据库结果需要分开判断，唯一索引与消费幂等共同处理重放；失败明细用于定位原因，并不自动等于补发。"
+      },
+      {
+        title: "秒杀控制",
+        insight: "缓存层尽早筛选，数据库保留最终写入约束。",
+        desc: "将库存是否充足、用户是否超过限领次数放入 Redis Lua 原子执行，对无库存和超限请求直接返回。有效请求进入 RocketMQ 异步发券链路，数据库通过带库存条件的更新和用户券唯一索引处理扣减、重复领取等竞争场景。",
+        tradeoff: "Lua 保证一次 Redis 执行的原子性，不能替代 Redis、消息队列与 MySQL 之间的状态协调。缓存负责前置拦截，数据库条件更新和唯一约束负责最终结果。"
+      },
+      {
+        title: "消息幂等",
+        insight: "重复消息要区分正在执行和已经完成，不能一律丢弃。",
+        desc: "通过自定义注解、AOP 与 SpEL 生成业务幂等键，用 Redis 原子写入消费中标识。遇到正在处理的同键消息时抛出异常，让队列延迟重试；已完成的消息直接跳过。正常结束更新完成状态，业务异常则清理标识，配合过期时间释放异常占用。",
+        tradeoff: "消费幂等用于控制重复执行，业务唯一索引仍要保留。状态过期后的重投、消费耗时和异常退出都需要纳入考虑，单个去重键并不构成端到端的恰好一次承诺。"
+      },
+      {
+        title: "分库路由",
+        insight: "围绕查询入口选择分片键，让分片真正服务于访问模式。",
+        desc: "采用 ShardingSphere HashMod 方案，以 shop_number 组织优惠券模板数据。商家维度的查询显式携带店铺编号，使路由落到目标分片；用户券数据则围绕用户维度组织。分片设计结合常见查询条件考虑，避免仅按数据量拆表后再承担全路由查询。",
+        tradeoff: "局部索引无法替代分片键。查询缺少路由条件时，分片内查询再快也可能需要访问多个节点；按店铺和用户组织数据，也意味着跨维度查询需要额外设计。"
+      },
+      {
+        title: "缓存防护",
+        insight: "把不存在的数据与热点失效分开处理。",
+        desc: "模板查询组合布隆过滤器、空值缓存与 Redisson 分布式锁：过滤器先排除明确不存在的模板，空值缓存覆盖不存在记录及误判场景；热点缓存失效时，通过加锁与锁内二次检查减少并发回源。",
+        tradeoff: "布隆过滤器可能误判存在，需要数据库和空值缓存继续确认；分布式锁只约束缓存重建路径，避免将所有正常命中请求也放进串行执行。"
+      }
+    ],
+    notes: [
+      {
+        title: "可靠性的讨论，要落到具体状态。",
+        desc: "这条链路最值得展开的是：任务解析到哪里、消息执行到哪里、用户最终拿到什么券。三类状态各有职责，排查和恢复才有依据。"
+      },
+      {
+        title: "性能优化先找往返，再谈并发。",
+        desc: "流式读取、Redis 批次暂存、数据库批量写入和游标导出，分别减少内存驻留、网络往返与无效扫描。更大的线程池并不天然意味着更快。"
+      }
     ]
   },
   {
     idx: "02",
-    year: "旅游助手系统",
-    period: "项目实践",
-    role: "Agent 开发",
-    title: "智旅云图",
-    tags: ["Python", "LangChain", "FastAPI", "LangGraph", "Chroma", "MySQL", "Redis", "BGE-M3", "Qwen3-Max", "MCP"],
-    desc:
-      "旅游助手系统，用于解决旅游信息零散、行程规划繁琐问题，支持个性化智能行程生成与文旅信息问答服务。",
+    year: "终端 AI 编程助手",
+    period: "个人项目实践",
+    role: "AI Agent 开发",
+    title: "码序｜终端 AI 编程 Agent",
+    tags: [
+      "Agent Loop",
+      "ReAct",
+      "Function Calling",
+      "MCP",
+      "Skills",
+      "JSONL",
+      "Git Worktree"
+    ],
+    headline: "让模型调用工具之后，长任务、权限和协作才真正开始。",
+    desc: "面向自然语言编程任务的终端助手，围绕模型决策、工具执行和结果反馈组织 Agent Loop。文件读取、搜索、编辑与命令执行提供基本行动能力；多模型适配、上下文管理、权限拦截与多 Agent 协作，进一步处理任务运行过程中遇到的协议差异、上下文膨胀和执行边界。",
+    flow: [
+      {
+        title: "模型决策",
+        desc: "理解目标并选择工具"
+      },
+      {
+        title: "权限校验",
+        desc: "规则、路径与人工确认"
+      },
+      {
+        title: "工具执行",
+        desc: "读取、编辑、搜索、命令"
+      },
+      {
+        title: "反馈再规划",
+        desc: "结果回写上下文并继续循环"
+      }
+    ],
     highlights: [
-      "基于通义千问与高德 MCP 自研 MCP-Service 工具基座，参与多角色协同旅游规划 Agent 系统设计。",
-      "基于 FastAPI 与 LangGraph 搭建多 Agent 工作流，实现景点、天气、酒店等 Agent 协同调度。",
-      "设计 Agent 检索纠错与工具重试机制，结合 RAG 进行结果校验与补全。",
-      "采用 SimHash、MinHash、TF-IDF 组合去重策略处理旅游知识库文本数据。",
-      "结合 BM25、BGE-M3 混合检索、RRF 融合与 Rerank 精排，优化问答匹配效率。"
+      {
+        title: "安全拦截",
+        insight: "执行权限由工具层落实，拒绝不能被另一条允许规则覆盖。",
+        desc: "在工具真正运行前组合危险命令检测、路径范围校验、规则引擎、权限模式和人工确认。路径检查先解析符号链接得到真实路径，再判断是否越界；权限链采用拒绝优先，避免不同作用域的规则出现允许覆盖拒绝的冲突。",
+        tradeoff: "字符串匹配无法覆盖所有命令组合，路径校验也属于应用层控制。多层检查的价值在于分别覆盖不同风险；进程级读写或网络隔离需要操作系统沙箱等独立机制。"
+      },
+      {
+        title: "会话管理",
+        insight: "摘要要节省上下文，也必须保住工具调用的配对边界。",
+        desc: "先将过长工具输出落盘，在会话中保留摘要和文件引用；历史接近预算时再生成结构化摘要。会话通过 JSONL 持久化，并在恢复、压缩和用户中断后检查工具调用与结果是否配对，必要时退回最近的完整轮次，避免孤立调用导致下一轮请求失败。",
+        tradeoff: "大结果落盘与历史摘要的损失程度不同，应先处理可回读的大输出。摘要请求本身同样消耗上下文预算，因此压缩触发点和空间不足时的退让策略也属于设计的一部分。"
+      },
+      {
+        title: "协议归一",
+        insight: "模型协议的差异留在客户端，Agent Loop 只消费统一事件。",
+        desc: "Anthropic 以内容块组织流式响应，OpenAI 兼容协议中的多个工具调用增量可能交错到达。客户端按调用索引累计参数，在结束边界组装完整调用，并将文本增量、工具开始、参数片段与调用结束转换为统一事件，供上层循环和终端界面使用。",
+        tradeoff: "适配层统一的是事件语义，模型特有能力仍需显式处理。工具参数在流式传输中通常是不完整 JSON，不能收到任意片段就解析执行；新增服务商应主要扩展解析器。"
+      },
+      {
+        title: "并行协作",
+        insight: "目录隔离解决文件干扰，消息类型解决任务误判。",
+        desc: "每个子 Agent 使用独立 Git Worktree，文件邮箱负责异步传递任务与进度。Coordinator 拆分任务、分配工作并跟踪状态；通信中区分任务分配、进度更新和停止请求，让 Worker 依据消息类型响应，减少把其他 Agent 的状态描述当作新指令的情况。",
+        tradeoff: "Worktree 分离工作目录，不能自动消除后续合并冲突，也不提供进程级安全隔离。适合拆分依赖较少的任务，最终结果仍需要合并与校验。"
+      },
+      {
+        title: "工具按需",
+        insight: "先让模型看到工具目录，需要时再支付完整定义的上下文成本。",
+        desc: "MCP 工具先提供名称和简述，检索命中后再加入完整 Schema；客户端维护已发现工具集合，在后续请求中主动携带定义，适配缺少服务端工具引用展开能力的端点。Skills 同样采用元数据与指令正文分阶段加载，按任务引入所需规则和工具。",
+        tradeoff: "按需加载减少初始上下文占用，但增加一次发现过程；工具被发现后仍占用后续请求预算。客户端管理定义，能减少对单一模型协议扩展的依赖。"
+      }
+    ],
+    notes: [
+      {
+        title: "一个 Agent 的工程能力，体现在中断之后。",
+        desc: "压缩、取消、断连与会话恢复都可能留下不完整状态。关注工具调用配对、输出引用和完整轮次，比只展示一次顺利的工具调用更能说明系统设计。"
+      },
+      {
+        title: "把 AI 辅助开发落实为可解释的方案。",
+        desc: "项目关注协议适配、上下文成本与权限边界这些可具体讨论的问题。工具辅助编码，技术选择仍需要结合约束说明原因，并通过运行结果判断是否成立。"
+      }
     ]
   }
 ];
@@ -225,35 +369,37 @@ interface CollabCard {
 const COLLAB_CARDS: CollabCard[] = [
   {
     icon: IconPuzzle,
-    title: "Java 全栈开发",
-    desc: "能够围绕 Spring 生态完成后端接口、数据访问、缓存中间件与部分前端页面联调"
+    title: "Java 后端开发",
+    desc: "围绕 Spring Boot、MyBatis-Plus 与 MySQL 完成业务接口、数据访问和前后端联调"
   },
   {
     icon: IconZap,
-    title: "AI 应用落地",
-    desc: "能够结合大模型、向量库、RAG 与 Function Calling 构建业务问答和智能推荐能力"
+    title: "数据与异步",
+    desc: "结合 Redis、RocketMQ 与定时任务处理缓存、批量分发、消费重试和业务幂等"
   },
   {
     icon: IconBot,
-    title: "Agent 工作流",
-    desc: "能够基于 LangGraph、MCP 与多 Agent 架构完成工具调用、任务编排和结果校验"
+    title: "Agent 工程实践",
+    desc: "围绕工具调用、上下文管理、权限控制与多 Agent 协作开展编程助手实践"
   }
 ];
 
 const CONTACT_TAGS = [
   "Java",
   "Spring Boot",
-  "SpringCloud",
+  "MyBatis-Plus",
   "MySQL",
   "Redis",
-  "RabbitMQ",
-  "ElasticSearch",
-  "Python",
-  "FastAPI",
-  "LangChain",
-  "LangGraph",
-  "RAG",
+  "RocketMQ",
+  "Redisson",
+  "ShardingSphere",
+  "XXL-Job",
+  "EasyExcel",
+  "ReAct",
+  "Function Calling",
   "MCP",
+  "Skills",
+  "Git Worktree",
   "Docker"
 ];
 
@@ -277,30 +423,25 @@ const HONORS: Honor[] = [
     detail: "程序设计竞赛一等奖，体现算法基础、编码能力与问题拆解能力。"
   },
   {
-    title: "校园实践大赛一等奖",
+    title: "校园实践大赛（软件开发类）特等奖",
     year: "软件开发类",
     issuer: "西安外事学院",
-    detail: "校园实践大赛软件开发类一等奖，体现项目实践与综合应用能力。"
-  },
-  {
-    title: "蓝桥杯一等奖",
-    year: "竞赛",
-    issuer: "蓝桥杯大赛组委会",
-    detail: "蓝桥杯一等奖，体现程序设计基础与竞赛实践能力。"
+    detail: "校园实践大赛软件开发类特等奖，体现项目实践与综合应用能力。"
   }
 ];
 
 const PROFILE = {
   name: "杜泽民",
-  intent: "求职方向：JAVA / 全栈 / AI应用 / Agent开发",
+  intent: "求职方向：Java 后端开发｜AI 应用方向",
+  bio: "专注 Java 后端开发，熟悉 Spring Boot、MyBatis-Plus、MySQL 与 Redis。通过券流和码序两个项目，实践异步任务、消息幂等、分库路由与 Agent 工程，关注代码实现、问题排查和方案取舍。",
   phone: "157-8078-5359",
   email: "354561650@qq.com",
-  age: "23岁",
+  status: "随时到岗",
   edu: "本科",
-  gender: "男",
+  focus: "Java 后端 / AI Agent",
   school: "西安外事学院",
   major: "计算机科学与技术 · 本科",
-  schoolPeriod: "2024 - 2026",
+  schoolPeriod: "2024—2026",
   location: "陕西"
 };
 
@@ -590,7 +731,7 @@ export function PortfolioNav() {
         <button
           onClick={() => onJump("heroSection")}
           className="text-xl font-black tracking-tight text-black transition-colors duration-500"
-          aria-label="返回首页"
+          aria-label={t("返回首页")}
         >
           DUZEMIN
         </button>
@@ -606,7 +747,7 @@ export function PortfolioNav() {
             )
           }}
           role="tablist"
-          aria-label="主导航"
+          aria-label={t("主导航")}
         >
           {NAV_ITEMS.map((it) => {
             const isActive = active === it.id;
@@ -706,7 +847,7 @@ export function PortfolioNav() {
             )
           }}
           role="tablist"
-          aria-label="主导航"
+          aria-label={t("主导航")}
         >
           {NAV_ITEMS.map((it) => {
             const isActive = active === it.id;
@@ -977,9 +1118,6 @@ function ProjectCard({ data }: { data: ProjectDetail }) {
   // 鼠标相对卡片中心的偏移（-0.5 ~ 0.5）
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const springCfg = { stiffness: 150, damping: 18, mass: 0.4 };
-  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-6, 6]), springCfg);
-  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [4, -4]), springCfg);
   // 光泽位置（百分比）
   const shineX = useTransform(mx, [-0.5, 0.5], ["0%", "100%"]);
   const shineY = useTransform(my, [-0.5, 0.5], ["0%", "100%"]);
@@ -1005,7 +1143,6 @@ function ProjectCard({ data }: { data: ProjectDetail }) {
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d", transformPerspective: 1200 }}
       className="group relative overflow-hidden bg-white rounded-2xl md:rounded-3xl border border-black/5 p-6 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.1)] transition-shadow duration-500 will-change-transform"
     >
       {/* 鼠标跟随的柔和光泽（跟随 mx, my 移动） */}
@@ -1024,44 +1161,100 @@ function ProjectCard({ data }: { data: ProjectDetail }) {
         {data.idx}
       </span>
 
-      <div className="relative grid md:grid-cols-[1fr_1.4fr] gap-6 md:gap-12">
-        <div>
-          <div className="text-[11px] tracking-[0.25em] text-neutral-400">
-            {data.period}
-          </div>
-          <div className="mt-1.5 text-xs tracking-wider text-neutral-500">
-            {t(data.role)}
-          </div>
-          <h3 className="mt-4 text-2xl md:text-3xl font-black text-black tracking-[-0.03em] leading-tight">
-            {t(data.title)}
-          </h3>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {data.tags.map((t) => (
-              <span
-                key={t}
-                className="text-[11px] tracking-wider px-2.5 py-1 rounded-full bg-black/[0.04] text-neutral-700 border border-black/5"
+      <div className="relative">
+        <div className="grid md:grid-cols-[1fr_1.4fr] gap-7 md:gap-12">
+          <div className="min-w-0">
+            <div className="text-[11px] tracking-[0.2em] text-neutral-400">
+              {t(data.period)} · {t(data.role)}
+            </div>
+            <h3 className="mt-4 text-balance text-2xl md:text-[28px] font-black text-black tracking-[-0.03em] leading-tight">
+              {t(data.title)}
+            </h3>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {data.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[11px] tracking-wider px-2.5 py-1 rounded-full bg-black/[0.04] text-neutral-700 border border-black/5"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            {data.link && (
+              <a
+                href={data.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-black underline underline-offset-4 hover:text-neutral-600"
               >
-                {t}
-              </span>
+                {t("查看项目源码")} <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
+          <div className="min-w-0">
+            <div className="text-[11px] tracking-[0.2em] text-neutral-400">{t(data.year)}</div>
+            <p className="mt-3 text-lg md:text-xl font-semibold leading-relaxed tracking-[-0.02em] text-black">
+              {t(data.headline)}
+            </p>
+            <p className="mt-4 text-sm md:text-base text-neutral-600 leading-relaxed">
+              {t(data.desc)}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 md:mt-10 rounded-2xl bg-neutral-50 border border-black/5 p-4 md:p-6">
+          <h4 className="text-[11px] font-semibold tracking-[0.2em] text-neutral-500">{t("核心链路")}</h4>
+          <ol className="mt-4 grid gap-3 sm:grid-cols-2 lg:flex">
+            {data.flow.map((step, index) => (
+              <li key={step.title} className="min-w-0 flex-1 rounded-xl bg-white border border-black/5 p-3.5">
+                <span className="text-[10px] font-mono text-neutral-400">0{index + 1}</span>
+                <div className="mt-1.5 text-sm font-semibold text-black">{t(step.title)}</div>
+                <p className="mt-1 text-xs leading-relaxed text-neutral-500">{t(step.desc)}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="mt-8 md:mt-10">
+          <h4 className="text-base font-bold text-black">{t("方案拆解")}</h4>
+          <p className="mt-2 text-xs md:text-sm leading-relaxed text-neutral-500">
+            {t("先看核心链路，再展开感兴趣的技术细节。")}
+          </p>
+          <div className="mt-5 grid gap-3">
+            {data.highlights.map((highlight, index) => (
+              <details
+                key={highlight.title}
+                open={index === 0}
+                className="group/detail rounded-2xl border border-black/10 bg-white open:border-black/20"
+              >
+                <summary className="flex cursor-pointer list-none items-start gap-3 p-4 md:p-5 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black [&::-webkit-details-marker]:hidden">
+                  <span className="mt-0.5 shrink-0 text-[11px] font-mono text-neutral-400">0{index + 1}</span>
+                  <span className="min-w-0 flex-1">
+                    <strong className="block text-sm md:text-base font-semibold text-black">{t(highlight.title)}</strong>
+                    <span className="mt-1 block text-xs md:text-sm leading-relaxed text-neutral-500">{t(highlight.insight)}</span>
+                  </span>
+                  <span aria-hidden="true" className="shrink-0 text-xl leading-none text-neutral-500 transition-transform group-open/detail:rotate-45">+</span>
+                </summary>
+                <div className="border-t border-black/5 px-4 pb-5 pt-4 md:px-10 md:pb-6">
+                  <p className="text-sm md:text-base leading-relaxed text-neutral-700">{t(highlight.desc)}</p>
+                  <div className="mt-4 border-l-2 border-black/15 pl-4">
+                    <h5 className="text-xs font-semibold text-black">{t("设计取舍")}</h5>
+                    <p className="mt-1.5 text-xs md:text-sm leading-relaxed text-neutral-500">{t(highlight.tradeoff)}</p>
+                  </div>
+                </div>
+              </details>
             ))}
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
-          <p className="text-sm md:text-base text-neutral-600 leading-relaxed">
-            {t(data.desc)}
-          </p>
-          <ul className="grid gap-2 mt-1">
-            {data.highlights.map((h, i) => (
-              <li
-                key={i}
-                className="flex gap-3 text-sm text-neutral-700 leading-relaxed"
-              >
-                <span className="shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-black" />
-                <span>{t(h)}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          {data.notes.map((note) => (
+            <div key={note.title} className="rounded-2xl bg-black/[0.035] p-5">
+              <div className="text-[10px] tracking-[0.2em] text-neutral-400">{t("工程思考")}</div>
+              <h4 className="mt-2 text-sm font-semibold leading-relaxed text-black">{t(note.title)}</h4>
+              <p className="mt-2 text-xs md:text-sm leading-relaxed text-neutral-600">{t(note.desc)}</p>
+            </div>
+          ))}
         </div>
       </div>
     </motion.article>
@@ -1106,7 +1299,7 @@ function HonorFlipCard({ data, i }: { data: Honor; i: number }) {
           </h3>
           {data.year && (
             <div className="mt-2 text-xs tracking-[0.2em] text-neutral-500">
-              {data.year}
+              {t(data.year)}
             </div>
           )}
         </div>
@@ -1599,12 +1792,15 @@ export function PortfolioSections() {
               <div className="mt-1 text-sm text-neutral-500">
                 {t(PROFILE.intent)}
               </div>
+              <p className="mt-5 text-sm leading-relaxed text-neutral-600">
+                {t(PROFILE.bio)}
+              </p>
 
               <dl className="mt-6 md:mt-8 grid grid-cols-2 gap-x-4 md:gap-x-6 gap-y-4 md:gap-y-5 text-sm">
                 <ProfileItem label={t("电话")} value={PROFILE.phone} />
                 <ProfileItem label={t("邮箱")} value={PROFILE.email} />
-                <ProfileItem label={t("年龄")} value={PROFILE.age} />
-                <ProfileItem label={t("性别")} value={t(PROFILE.gender)} />
+                <ProfileItem label={t("到岗状态")} value={t(PROFILE.status)} />
+                <ProfileItem label={t("项目方向")} value={t(PROFILE.focus)} />
                 <ProfileItem label={t("最高学历")} value={t(PROFILE.edu)} />
                 <ProfileItem label={t("坐标")} value={t(PROFILE.location)} />
               </dl>
@@ -1629,7 +1825,7 @@ export function PortfolioSections() {
                   {t(PROFILE.major)}
                 </div>
                 <p className="mt-5 text-sm text-neutral-600 leading-relaxed">
-                  {t("在校期间系统学习计算机科学与技术相关课程，结合竞赛与项目实践积累了 Java 全栈、AI 应用、RAG 检索和 Agent 编排经验。")}
+                  {t("学习计算机科学与技术相关课程，通过程序设计竞赛和个人项目积累编码经验，持续实践 Java 后端、数据库缓存、异步处理与 AI Agent 开发。")}
                 </p>
               </div>
             </div>
@@ -1653,7 +1849,10 @@ export function PortfolioSections() {
         className="relative mx-auto max-w-[1100px] px-5 md:px-6 pt-24 md:pt-48"
       >
         <FadeIn>
-          <SectionTitle>{t("项目经历")}</SectionTitle>
+          <SectionTitle>{t("精选项目")}</SectionTitle>
+          <p className="mt-5 max-w-2xl text-sm md:text-base leading-relaxed text-neutral-500">
+            {t("从业务约束到技术选择，展开查看每个方案的实现思路与边界。")}
+          </p>
         </FadeIn>
         <div className="mt-10 md:mt-20 grid gap-5 md:gap-8">
           {PROJECTS.map((p) => (
@@ -1688,7 +1887,7 @@ export function PortfolioSections() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <p className="text-base md:text-lg text-neutral-600 leading-relaxed max-w-xl">
-              {t("面向 JAVA 全栈、AI 应用与 Agent 开发方向，能够围绕 Spring 生态、数据库缓存、消息队列、大模型应用和多 Agent 工作流参与项目建设。")}
+              {t("以 Java 后端开发为主，关注接口设计、数据库缓存与异步任务处理，同时探索 AI Agent 工程。欢迎后端开发机会与项目交流，目前可随时到岗。")}
             </p>
           </FadeIn>
         </div>
@@ -1705,7 +1904,7 @@ export function PortfolioSections() {
       {/* 页脚 */}
       <footer className="relative mt-24 md:mt-32 border-t border-black/5">
         <div className="mx-auto max-w-[1100px] px-5 md:px-6 py-8 md:py-10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500 tracking-wider">
-          <span>{t("© 2026 LEO. ALL RIGHTS RESERVED.")}</span>
+          <span>{t("© 2026 杜泽民. ALL RIGHTS RESERVED.")}</span>
           <span>{t("Designed & Built with 黑白高级感")}</span>
         </div>
       </footer>
@@ -1754,7 +1953,7 @@ function ContactSection() {
 
       <FadeIn delay={0.1}>
         <p className="mt-8 md:mt-10 text-base md:text-lg text-neutral-600 leading-relaxed max-w-2xl">
-          {t("期待围绕 Java 全栈、AI 应用和 Agent 工作流继续做有交付价值的项目，把后端工程能力和大模型应用能力结合起来。")}
+          {t("希望加入重视工程实践的团队，围绕 Java 后端和 AI 应用，把接口、数据与任务流程做扎实。欢迎通过邮件或表单与我交流。")}
         </p>
       </FadeIn>
 
@@ -1778,7 +1977,7 @@ function ContactSection() {
                 </div>
                 <div>
                   <div className="text-[11px] tracking-[0.25em] text-neutral-400">{t("意向岗位")}</div>
-                  <div className="text-base text-black">{t("JAVA / 全栈 / AI应用 / Agent开发")}</div>
+                  <div className="text-base text-black">{t("Java 后端开发｜AI 应用方向")}</div>
                 </div>
               </div>
               <div className="flex items-start gap-4">

@@ -3,9 +3,14 @@
 import { useEffect, useRef } from "react";
 import { HUANSEN_CSS } from "./huansen-styles";
 import { PortfolioNav, PortfolioSections } from "./portfolio-sections";
-import { LangProvider } from "./i18n";
+import { LangProvider, useLang } from "./i18n";
 import { ScrollProgress } from "./portfolio-enhancers";
 import { ShaderAnimation } from "./shader-animation";
+
+function HeroSubtitle() {
+  const { t } = useLang();
+  return <div className="subtitle">{t("Java 后端开发 ｜ AI 应用与 Agent 工程实践")}</div>;
+}
 
 /**
  * 极简风交互首页（React Client Component）。
@@ -198,9 +203,7 @@ export function HuansenPage() {
                 杜泽民
               </span>
             </div>
-            <div className="subtitle">
-              JAVA / 全栈 / AI应用 / Agent开发 ｜ 西安外事学院 · 计算机科学与技术
-            </div>
+            <HeroSubtitle />
           </div>
           <div className="scroll-indicator">
             <div className="scroll-text">Scroll</div>
