@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type MouseEvent, type ReactNode } from "react";
-import { motion, useMotionTemplate, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { useLang } from "./i18n";
+import { ProjectVisual } from "./project-visual";
+import "./project-visual.css";
 
 /* =========================================================================
  * 线性黑白图标（基于 Lucide 路径，内联 SVG，零依赖）
@@ -93,7 +95,6 @@ const NAV_ITEMS = [
   { id: "skills", label: "技能" },
   { id: "projects", label: "项目" },
   { id: "honors", label: "荣誉" },
-  { id: "collab", label: "合作" },
   { id: "contact", label: "联系" }
 ] as const;
 
@@ -182,7 +183,6 @@ interface ProjectDetail extends Project {
   period: string;
   link?: string;
   headline: string;
-  flow: { title: string; desc: string }[];
   highlights: { title: string; insight: string; desc: string; tradeoff: string }[];
   notes: { title: string; desc: string }[];
 }
@@ -209,28 +209,6 @@ const PROJECTS: ProjectDetail[] = [
     link: "https://github.com/BoosaIDonng/coupon-flow-platform",
     headline: "一份发券名单背后，是吞吐、库存与失败恢复的协同设计。",
     desc: "面向电商营销场景，串联商家模板管理、批量与定时发券、秒杀领取，以及预约提醒、锁定核销与退款。项目重点放在两条链路：大名单如何分批发得稳，并发领取如何尽早拦截无效请求。任务进度、消息状态与最终领券结果分别处理，让中断、重试和失败明细都有明确的落点。",
-    flow: [
-      {
-        title: "任务触发",
-        desc: "即时创建 / XXL-Job 调度"
-      },
-      {
-        title: "流式解析",
-        desc: "EasyExcel 逐行读取名单"
-      },
-      {
-        title: "库存预扣",
-        desc: "Redis Lua 校验并暂存"
-      },
-      {
-        title: "批次投递",
-        desc: "RocketMQ 解耦分发处理"
-      },
-      {
-        title: "事务落库",
-        desc: "MySQL 条件更新与唯一约束"
-      }
-    ],
     highlights: [
       {
         title: "批量分发",
@@ -297,24 +275,6 @@ const PROJECTS: ProjectDetail[] = [
     ],
     headline: "让模型调用工具之后，长任务、权限和协作才真正开始。",
     desc: "面向自然语言编程任务的终端助手，围绕模型决策、工具执行和结果反馈组织 Agent Loop。文件读取、搜索、编辑与命令执行提供基本行动能力；多模型适配、上下文管理、权限拦截与多 Agent 协作，进一步处理任务运行过程中遇到的协议差异、上下文膨胀和执行边界。",
-    flow: [
-      {
-        title: "模型决策",
-        desc: "理解目标并选择工具"
-      },
-      {
-        title: "权限校验",
-        desc: "规则、路径与人工确认"
-      },
-      {
-        title: "工具执行",
-        desc: "读取、编辑、搜索、命令"
-      },
-      {
-        title: "反馈再规划",
-        desc: "结果回写上下文并继续循环"
-      }
-    ],
     highlights: [
       {
         title: "安全拦截",
@@ -449,239 +409,6 @@ const PROFILE = {
  * 顶部固定导航
  * =======================================================================*/
 
-// Uiverse.io / njesenberger - lever toggle（拨杆开关）
-// 未勾选 = EN，勾选 = 中
-const TOGGLE_CSS = `
-.toggle-container {
-  --knob-size: 1.75em;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  font-size: 10px; /* 控制整体大小，适配顶栏 64px */
-  width: 3.5em;
-  height: 1.125em;
-  align-items: center;
-}
-.toggle-input {
-  position: absolute;
-  z-index: 2;
-  bottom: 132.5%;
-  border-radius: 50%;
-  transform: rotate(-25deg);
-  transform-origin: 50% 4.75em;
-  width: var(--knob-size);
-  height: var(--knob-size);
-  opacity: 0;
-  font: inherit;
-  transition: transform .24s cubic-bezier(.65, 1.35, .5, 1);
-  cursor: pointer;
-  margin: 0;
-}
-.toggle-input:checked { transform: rotate(25deg); }
-
-.toggle-handle-wrapper {
-  position: absolute;
-  z-index: 1;
-  bottom: -135%;
-  -webkit-mask-image: linear-gradient(to bottom, #000 62.125%, transparent 50%);
-  mask-image: linear-gradient(to bottom, #000 62.125%, transparent 50%);
-  width: 200%;
-  overflow: hidden;
-  pointer-events: none;
-}
-.toggle-handle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: rotate(-25deg);
-  transform-origin: bottom center;
-  transition: transform .24s cubic-bezier(.65, 1.35, .5, 1);
-}
-.toggle-input:checked + .toggle-handle-wrapper > .toggle-handle {
-  transform: rotate(25deg);
-}
-.toggle-handle-knob {
-  position: relative;
-  z-index: 1;
-  border-radius: 50%;
-  width: var(--knob-size);
-  height: var(--knob-size);
-  background-image: radial-gradient(farthest-corner at 70% 30%, #fedee2 4%, #d63534 12% 24%, #a81a1a 50% 65%, #d63534 75%);
-  transition: transform .24s cubic-bezier(.65, 1.35, .5, 1);
-}
-.toggle-input:checked + .toggle-handle-wrapper .toggle-handle-knob {
-  transform: rotate(-90deg);
-}
-.toggle-handle-knob::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  border-radius: inherit;
-  width: 100%; height: 100%;
-  box-shadow: inset 0 0 8px 2px rgb(255 255 255 / .4);
-  opacity: 0;
-  transition: opacity .2s;
-}
-@media (hover: hover) {
-  .toggle-input:hover + .toggle-handle-wrapper .toggle-handle-knob::after,
-  .toggle-input:focus-visible + .toggle-handle-wrapper .toggle-handle-knob::after {
-    opacity: 1;
-  }
-}
-.toggle-handle-bar-wrapper {
-  position: relative;
-  width: .5em;
-  height: 3em;
-}
-.toggle-handle-bar {
-  position: absolute;
-  top: calc(var(--knob-size) / 2 * -1);
-  left: 0;
-  width: 100%;
-  height: calc(100% + var(--knob-size) / 2);
-  background-image: linear-gradient(to right, #777475, #a4a4a4, #fff 45% 55%, #a4a4a4, #777475);
-  background-position-x: .06125em;
-  transition: background-position-x .24s cubic-bezier(.65, 1.35, .5, 1);
-  box-shadow: inset 0 1em .25em rgb(0 0 0 / .4);
-}
-.toggle-input:checked + .toggle-handle-wrapper .toggle-handle-bar {
-  background-position-x: -.06125em;
-}
-.toggle-base {
-  position: relative;
-  border-radius: 3.125em;
-  padding: .25em;
-  width: 3.5em;
-  height: 1.125em;
-  background-color: #fff;
-  background-image: linear-gradient(to bottom, #fff, #d7d7d7);
-  box-shadow: 0 -.25em .5em #fff, 0 .25em .5em #d7d7d7;
-}
-.toggle-base-inside {
-  position: relative;
-  border-radius: inherit;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to bottom, #a6a6a6, #7d7d7d);
-  box-shadow:
-    inset 0 .0625em rgb(255 255 255 / .2),
-    inset 0 -.03125em rgb(255 255 255 / 1),
-    inset 0 -.0625em .25em rgb(0 0 0 / .1);
-}
-.toggle-base-inside::after {
-  content: '';
-  position: absolute;
-  border-radius: inherit;
-  width: 100%; height: 100%;
-  background-image: linear-gradient(to bottom, #5ab054, #438c3c);
-  box-shadow: inherit;
-  opacity: 0;
-  transition: opacity .24s cubic-bezier(.65, 1.35, .5, 1);
-}
-.toggle-input:checked ~ .toggle-base .toggle-base-inside::after {
-  opacity: 1;
-}
-`;
-
-// 基于 Uiverse.io / chase2k25 的 glass-radio-group 改写：
-// - 适配黑白主题（白色/玻璃态，替换原深色版）
-// - 支持任意项数：glider 宽度 = 100% / var(--nav-count)
-//   glider 位置 = translateX(var(--nav-index) * 100%)
-const GLASS_NAV_CSS = `
-.glass-radio-group {
-  position: relative;
-  background: rgba(0, 0, 0, 0.04);
-  border-radius: 999px;
-  padding: 4px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow:
-    inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-    inset -1px -1px 2px rgba(0, 0, 0, 0.04),
-    0 2px 10px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-}
-
-.glass-radio-item {
-  position: relative;
-  z-index: 2;
-  padding: 0.45rem 1rem;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: #6e6e6b;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  border-radius: 999px;
-  transition: color 0.3s ease;
-  white-space: nowrap;
-}
-.glass-radio-item:hover { color: #111; }
-.glass-radio-item.is-active { color: #000; }
-
-.glass-glider {
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 4px;
-  width: calc((100% - 8px) / var(--nav-count, 1));
-  border-radius: 999px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(235,235,232,0.85));
-  box-shadow:
-    0 6px 14px rgba(0, 0, 0, 0.08),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.04);
-  transform: translateX(calc(var(--nav-index, 0) * 100%));
-  transition:
-    transform 0.55s cubic-bezier(0.37, 1.3, 0.66, 1),
-    width 0.4s ease,
-    background 0.4s ease;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.mobile-nav-strip {
-  scrollbar-width: none;
-}
-.mobile-nav-strip::-webkit-scrollbar {
-  display: none;
-}
-.mobile-nav-rail {
-  display: flex;
-  width: max-content;
-  min-width: max-content;
-  max-width: none;
-}
-.mobile-nav-rail .glass-radio-item {
-  padding: 0.44rem 0.9rem;
-  font-size: 12px;
-}
-
-.portfolio-nav--hero .glass-radio-group {
-  background: rgba(255, 255, 255, 0.56);
-  box-shadow:
-    inset 1px 1px 2px rgba(255, 255, 255, 0.72),
-    inset -1px -1px 2px rgba(0, 0, 0, 0.05),
-    0 8px 24px rgba(0, 0, 0, 0.08);
-}
-
-.portfolio-nav--hero .glass-radio-item {
-  color: rgba(18, 18, 18, 0.58);
-}
-.portfolio-nav--hero .glass-radio-item:hover { color: #111; }
-.portfolio-nav--hero .glass-radio-item.is-active { color: #000; }
-
-.portfolio-nav--hero .glass-glider {
-  background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(242,242,238,0.9));
-  box-shadow:
-    0 8px 18px rgba(0, 0, 0, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.75),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.04);
-}
-`;
-
-
 export function PortfolioNav() {
   const [active, setActive] = useState<string>("heroSection");
   const { lang, setLang, t } = useLang();
@@ -705,168 +432,38 @@ export function PortfolioNav() {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  const onJump = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const isHeroActive = active === "heroSection";
-
   return (
-    <header
-      className={`portfolio-nav fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-500 ${
-        isHeroActive
-          ? "portfolio-nav--hero bg-white/[0.74] border-black/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]"
-          : "bg-white/[0.72] border-black/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]"
-      }`}
-    >
-      <style
-        dangerouslySetInnerHTML={{
-          __html: GLASS_NAV_CSS + TOGGLE_CSS
-        }}
-      />
-      <div className="mx-auto max-w-[1180px] px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
-        {/* Logo */}
-        <button
-          onClick={() => onJump("heroSection")}
-          className="text-xl font-black tracking-tight text-black transition-colors duration-500"
-          aria-label={t("返回首页")}
-        >
-          DUZEMIN
-        </button>
-
-        {/* 中间导航 - 桌面端：Uiverse 玻璃胶囊 + Glider 滑块 */}
-        <nav
-          className="hidden md:flex glass-radio-group"
-          style={{
-            ["--nav-count" as string]: NAV_ITEMS.length,
-            ["--nav-index" as string]: Math.max(
-              0,
-              NAV_ITEMS.findIndex((it) => it.id === active)
-            )
-          }}
-          role="tablist"
-          aria-label={t("主导航")}
-        >
-          {NAV_ITEMS.map((it) => {
-            const isActive = active === it.id;
-            return (
-              <button
-                key={it.id}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => onJump(it.id)}
-                className={`glass-radio-item ${isActive ? "is-active" : ""}`}
-              >
-                {t(it.label)}
-              </button>
-            );
-          })}
-          <span className="glass-glider" aria-hidden="true" />
+    <header className="portfolio-nav fixed inset-x-0 top-0 z-50">
+      <div className="portfolio-nav-inner mx-auto max-w-[1180px] px-5 md:px-6">
+        <a href="#heroSection" className="portfolio-wordmark" aria-label={t("返回首页")}>
+          DUZEMIN<span aria-hidden="true">.</span>
+        </a>
+        <nav className="portfolio-nav-links hidden md:flex" aria-label={t("主导航")}>
+          {NAV_ITEMS.map((item) => (
+            <a key={item.id} href={`#${item.id}`} aria-current={active === item.id ? "location" : undefined}>
+              {t(item.label)}
+            </a>
+          ))}
         </nav>
-
-        {/* 右侧：位置 + 语言 */}
-        <div className="hidden md:flex items-center gap-4">
-          <span
-            className="text-xs tracking-wider flex items-center gap-1.5 text-neutral-500 transition-colors duration-500"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="flex items-center gap-5">
+          <span className="hidden lg:flex items-center gap-2 text-xs text-neutral-500">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--portfolio-accent)]" />
             {t("陕西 西安")}
           </span>
-          <div className="flex items-center gap-2 text-xs">
-            <span
-              className={`transition-colors ${
-                lang === "EN"
-                  ? "text-black font-semibold"
-                  : "text-neutral-400"
-              }`}
-            >
-              EN
-            </span>
-            <label
-              className="toggle-container"
-              aria-label="语言切换：EN / 中"
-              title="EN / 中"
-            >
-              <input
-                type="checkbox"
-                className="toggle-input"
-                checked={lang === "中"}
-                onChange={(e) => setLang(e.target.checked ? "中" : "EN")}
-              />
-              <div className="toggle-handle-wrapper">
-                <div className="toggle-handle">
-                  <div className="toggle-handle-knob" />
-                  <div className="toggle-handle-bar-wrapper">
-                    <div className="toggle-handle-bar" />
-                  </div>
-                </div>
-              </div>
-              <div className="toggle-base">
-                <div className="toggle-base-inside" />
-              </div>
-            </label>
-            <span
-              className={`transition-colors ${
-                lang === "中"
-                  ? "text-black font-semibold"
-                  : "text-neutral-400"
-              }`}
-            >
-              中
-            </span>
-          </div>
-        </div>
-
-        <div className="md:hidden flex items-center">
-          <button
-            type="button"
-            onClick={() => setLang(lang === "EN" ? "中" : "EN")}
-            className={`h-8 min-w-12 rounded-full border px-3 text-xs font-semibold transition-colors ${
-              isHeroActive
-                ? "border-black/10 bg-white/[0.78] text-black"
-                : "border-black/10 bg-white/[0.74] text-black"
-            }`}
-            aria-label="语言切换：EN / 中"
-          >
-            {lang}
+          <button type="button" className="portfolio-language" onClick={() => setLang(lang === "中" ? "EN" : "中")} aria-label="语言切换：EN / 中">
+            <span className={lang === "中" ? "is-active" : ""}>中</span>
+            <span aria-hidden="true" className="portfolio-language-divider" />
+            <span className={lang === "EN" ? "is-active" : ""}>EN</span>
           </button>
         </div>
       </div>
-
-      <div className="mobile-nav-strip md:hidden overflow-x-auto px-3 pb-3">
-        <nav
-          className="mobile-nav-rail glass-radio-group"
-          style={{
-            ["--nav-count" as string]: NAV_ITEMS.length,
-            ["--nav-index" as string]: Math.max(
-              0,
-              NAV_ITEMS.findIndex((it) => it.id === active)
-            )
-          }}
-          role="tablist"
-          aria-label={t("主导航")}
-        >
-          {NAV_ITEMS.map((it) => {
-            const isActive = active === it.id;
-            return (
-              <button
-                key={it.id}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => onJump(it.id)}
-                className={`glass-radio-item ${isActive ? "is-active" : ""}`}
-              >
-                {t(it.label)}
-              </button>
-            );
-          })}
-          <span className="glass-glider" aria-hidden="true" />
-        </nav>
-      </div>
+      <nav className="portfolio-nav-links portfolio-mobile-nav md:hidden" aria-label={t("主导航")}>
+        {NAV_ITEMS.map((item) => (
+          <a key={item.id} href={`#${item.id}`} aria-current={active === item.id ? "location" : undefined}>
+            {t(item.label)}
+          </a>
+        ))}
+      </nav>
     </header>
   );
 }
@@ -875,13 +472,11 @@ export function PortfolioNav() {
  * 通用小组件
  * =======================================================================*/
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function SectionTitle({ children, eyebrow }: { children: ReactNode; eyebrow?: string }) {
   return (
-    <div className="relative inline-block">
-      <h2 className="text-3xl md:text-5xl font-black tracking-[-0.04em] text-black">
-        {children}
-      </h2>
-      <span className="absolute -bottom-3 left-0 w-12 h-[3px] bg-black rounded-full" />
+    <div className="section-heading">
+      {eyebrow && <p className="section-eyebrow">{eyebrow}</p>}
+      <h2>{children}</h2>
     </div>
   );
 }
@@ -990,10 +585,10 @@ function SkillsStickyShowcase() {
                   <motion.div
                     animate={{
                       scale: isActive ? 1 : 0.9,
-                      backgroundColor: isActive ? "#000" : "#ffffff",
+                      backgroundColor: isActive ? "#c45f3d" : "#ffffff",
                       color: isActive ? "#fff" : "#9a9a9a",
                       borderColor: isActive
-                        ? "#000"
+                        ? "#c45f3d"
                         : "rgba(0,0,0,0.1)"
                     }}
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -1028,7 +623,7 @@ function SkillsStickyShowcase() {
                         animate={{ scaleX: isActive ? 1 : 0 }}
                         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                         style={{ transformOrigin: "left" }}
-                        className="mt-4 h-px bg-black w-full"
+                        className="mt-4 h-px bg-[var(--portfolio-accent)] w-full"
                       />
                     </motion.div>
                   </div>
@@ -1052,7 +647,7 @@ function SkillsStickyShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-white rounded-2xl md:rounded-3xl border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.05)] p-6 md:p-10"
+            className="skill-panel bg-white rounded-2xl md:rounded-3xl border border-black/5 p-6 md:p-9"
           >
             {/* 顶部：分类 tag */}
             <div className="flex items-center gap-3 mb-6">
@@ -1114,148 +709,74 @@ function SkillsStickyShowcase() {
 
 function ProjectCard({ data }: { data: ProjectDetail }) {
   const { t } = useLang();
-  const cardRef = useRef<HTMLDivElement>(null);
-  // 鼠标相对卡片中心的偏移（-0.5 ~ 0.5）
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  // 光泽位置（百分比）
-  const shineX = useTransform(mx, [-0.5, 0.5], ["0%", "100%"]);
-  const shineY = useTransform(my, [-0.5, 0.5], ["0%", "100%"]);
-
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    mx.set((e.clientX - rect.left) / rect.width - 0.5);
-    my.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-  const onMouseLeave = () => {
-    mx.set(0);
-    my.set(0);
-  };
-
   return (
     <motion.article
-      ref={cardRef}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      className="group relative overflow-hidden bg-white rounded-2xl md:rounded-3xl border border-black/5 p-6 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.1)] transition-shadow duration-500 will-change-transform"
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="project-case"
     >
-      {/* 鼠标跟随的柔和光泽（跟随 mx, my 移动） */}
-      <motion.span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: useMotionTemplate`radial-gradient(400px circle at ${shineX} ${shineY}, rgba(0,0,0,0.08), transparent 60%)`
-        }}
-      />
-      {/* 装饰大数字 */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-4 -top-4 md:-right-6 md:-top-10 text-[110px] md:text-[220px] font-black leading-none text-black/[0.035] select-none"
-      >
-        {data.idx}
-      </span>
+      <div className="project-case-header">
+        <div className="min-w-0">
+          <div className="project-eyebrow">
+            <span>{data.idx}</span> {t(data.period)} · {t(data.role)}
+          </div>
+          <h3>{t(data.title)}</h3>
+          <div className="project-tags">
+            {data.tags.map((tag) => <span key={tag}>{tag}</span>)}
+          </div>
+          {data.link && (
+            <a href={data.link} target="_blank" rel="noopener noreferrer" className="project-source">
+              {t("查看项目源码")} <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+        <div className="project-overview">
+          <p className="project-headline">{t(data.headline)}</p>
+          <p className="project-description">{t(data.desc)}</p>
+        </div>
+      </div>
 
-      <div className="relative">
-        <div className="grid md:grid-cols-[1fr_1.4fr] gap-7 md:gap-12">
-          <div className="min-w-0">
-            <div className="text-[11px] tracking-[0.2em] text-neutral-400">
-              {t(data.period)} · {t(data.role)}
-            </div>
-            <h3 className="mt-4 text-balance text-2xl md:text-[28px] font-black text-black tracking-[-0.03em] leading-tight">
-              {t(data.title)}
-            </h3>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {data.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[11px] tracking-wider px-2.5 py-1 rounded-full bg-black/[0.04] text-neutral-700 border border-black/5"
-                >
-                  {tag}
+      <ProjectVisual kind={data.idx === "01" ? "coupon" : "agent"} />
+
+      <div className="project-breakdown">
+        <div className="project-breakdown-intro">
+          <span className="section-eyebrow">ENGINEERING DETAILS</span>
+          <h4>{t("方案拆解")}</h4>
+          <p>{t("先看核心链路，再展开感兴趣的技术细节。")}</p>
+        </div>
+        <div className="project-accordion">
+          {data.highlights.map((highlight, index) => (
+            <details key={highlight.title} open={index === 0}>
+              <summary>
+                <span className="project-detail-index">0{index + 1}</span>
+                <span className="project-detail-label">
+                  <strong>{t(highlight.title)}</strong>
+                  <span>{t(highlight.insight)}</span>
                 </span>
-              ))}
-            </div>
-            {data.link && (
-              <a
-                href={data.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-black underline underline-offset-4 hover:text-neutral-600"
-              >
-                {t("查看项目源码")} <span aria-hidden="true">↗</span>
-              </a>
-            )}
-          </div>
-          <div className="min-w-0">
-            <div className="text-[11px] tracking-[0.2em] text-neutral-400">{t(data.year)}</div>
-            <p className="mt-3 text-lg md:text-xl font-semibold leading-relaxed tracking-[-0.02em] text-black">
-              {t(data.headline)}
-            </p>
-            <p className="mt-4 text-sm md:text-base text-neutral-600 leading-relaxed">
-              {t(data.desc)}
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-8 md:mt-10 rounded-2xl bg-neutral-50 border border-black/5 p-4 md:p-6">
-          <h4 className="text-[11px] font-semibold tracking-[0.2em] text-neutral-500">{t("核心链路")}</h4>
-          <ol className="mt-4 grid gap-3 sm:grid-cols-2 lg:flex">
-            {data.flow.map((step, index) => (
-              <li key={step.title} className="min-w-0 flex-1 rounded-xl bg-white border border-black/5 p-3.5">
-                <span className="text-[10px] font-mono text-neutral-400">0{index + 1}</span>
-                <div className="mt-1.5 text-sm font-semibold text-black">{t(step.title)}</div>
-                <p className="mt-1 text-xs leading-relaxed text-neutral-500">{t(step.desc)}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="mt-8 md:mt-10">
-          <h4 className="text-base font-bold text-black">{t("方案拆解")}</h4>
-          <p className="mt-2 text-xs md:text-sm leading-relaxed text-neutral-500">
-            {t("先看核心链路，再展开感兴趣的技术细节。")}
-          </p>
-          <div className="mt-5 grid gap-3">
-            {data.highlights.map((highlight, index) => (
-              <details
-                key={highlight.title}
-                open={index === 0}
-                className="group/detail rounded-2xl border border-black/10 bg-white open:border-black/20"
-              >
-                <summary className="flex cursor-pointer list-none items-start gap-3 p-4 md:p-5 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black [&::-webkit-details-marker]:hidden">
-                  <span className="mt-0.5 shrink-0 text-[11px] font-mono text-neutral-400">0{index + 1}</span>
-                  <span className="min-w-0 flex-1">
-                    <strong className="block text-sm md:text-base font-semibold text-black">{t(highlight.title)}</strong>
-                    <span className="mt-1 block text-xs md:text-sm leading-relaxed text-neutral-500">{t(highlight.insight)}</span>
-                  </span>
-                  <span aria-hidden="true" className="shrink-0 text-xl leading-none text-neutral-500 transition-transform group-open/detail:rotate-45">+</span>
-                </summary>
-                <div className="border-t border-black/5 px-4 pb-5 pt-4 md:px-10 md:pb-6">
-                  <p className="text-sm md:text-base leading-relaxed text-neutral-700">{t(highlight.desc)}</p>
-                  <div className="mt-4 border-l-2 border-black/15 pl-4">
-                    <h5 className="text-xs font-semibold text-black">{t("设计取舍")}</h5>
-                    <p className="mt-1.5 text-xs md:text-sm leading-relaxed text-neutral-500">{t(highlight.tradeoff)}</p>
-                  </div>
+                <span aria-hidden="true" className="project-detail-toggle">+</span>
+              </summary>
+              <div className="project-detail-body">
+                <p>{t(highlight.desc)}</p>
+                <div className="project-tradeoff">
+                  <h5>{t("设计取舍")}</h5>
+                  <p>{t(highlight.tradeoff)}</p>
                 </div>
-              </details>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {data.notes.map((note) => (
-            <div key={note.title} className="rounded-2xl bg-black/[0.035] p-5">
-              <div className="text-[10px] tracking-[0.2em] text-neutral-400">{t("工程思考")}</div>
-              <h4 className="mt-2 text-sm font-semibold leading-relaxed text-black">{t(note.title)}</h4>
-              <p className="mt-2 text-xs md:text-sm leading-relaxed text-neutral-600">{t(note.desc)}</p>
-            </div>
+              </div>
+            </details>
           ))}
         </div>
+      </div>
+
+      <div className="project-notes">
+        {data.notes.map((note) => (
+          <div key={note.title}>
+            <span className="section-eyebrow">{t("工程思考")}</span>
+            <h4>{t(note.title)}</h4>
+            <p>{t(note.desc)}</p>
+          </div>
+        ))}
       </div>
     </motion.article>
   );
@@ -1316,71 +837,6 @@ function HonorFlipCard({ data, i }: { data: Honor; i: number }) {
           </p>
         </div>
       </div>
-    </motion.div>
-  );
-}
-
-/* =========================================================================
- * 合作卡片
- * =======================================================================*/
-
-function GlowCard({
-  children,
-  className = ""
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const syncPointer = (e: PointerEvent) => {
-      const card = cardRef.current;
-      if (!card) return;
-      card.style.setProperty("--x", e.clientX.toFixed(2));
-      card.style.setProperty("--xp", (e.clientX / window.innerWidth).toFixed(2));
-      card.style.setProperty("--y", e.clientY.toFixed(2));
-      card.style.setProperty("--yp", (e.clientY / window.innerHeight).toFixed(2));
-    };
-
-    document.addEventListener("pointermove", syncPointer);
-    return () => document.removeEventListener("pointermove", syncPointer);
-  }, []);
-
-  return (
-    <div
-      ref={cardRef}
-      data-glow-card
-      className={`glow-card relative min-h-[112px] md:min-h-[320px] rounded-[14px] p-3 md:p-10 ${className}`}
-    >
-      <div data-glow-card aria-hidden />
-      <div className="relative z-10">{children}</div>
-    </div>
-  );
-}
-
-function CollabItem({ data, i }: { data: CollabCard; i: number }) {
-  const { t } = useLang();
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -8 }}
-      className="group min-w-0"
-    >
-      <GlowCard>
-        <div className="w-8 h-8 md:w-14 md:h-14 rounded-lg md:rounded-2xl bg-black text-white grid place-items-center transition-transform duration-500 group-hover:rotate-[8deg] group-hover:scale-105">
-          {data.icon}
-        </div>
-        <h3 className="mt-3 md:mt-6 text-[12px] md:text-xl leading-snug font-black text-black tracking-normal md:tracking-[-0.02em]">
-          {t(data.title)}
-        </h3>
-        <p className="hidden md:block mt-3 text-sm text-neutral-600 leading-relaxed">
-          {t(data.desc)}
-        </p>
-      </GlowCard>
     </motion.div>
   );
 }
@@ -1727,19 +1183,19 @@ function PortfolioHighlightBackground({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className="group relative bg-white text-black"
+      className="portfolio-content group relative text-black"
       onMouseMove={handleMouseMove}
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 opacity-70"
-        style={dotPattern("rgb(212 212 212)")}
+        className="pointer-events-none absolute inset-0 z-0 opacity-20"
+        style={dotPattern("rgb(198 190 180)")}
       />
       <motion.div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0 opacity-0 transition duration-300 group-hover:opacity-100"
         style={{
-          ...dotPattern("rgb(99 102 241)"),
+          ...dotPattern("rgb(196 95 61)"),
           WebkitMaskImage: useMotionTemplate`
             radial-gradient(
               200px circle at ${mouseX}px ${mouseY}px,
@@ -1767,21 +1223,16 @@ export function PortfolioSections() {
     <PortfolioHighlightBackground>
 
       {/* 关于我：个人档案 + 教育经历 */}
-      <section id="about" className="relative mx-auto max-w-[1100px] px-5 md:px-6 pt-20 md:pt-40">
+      <section id="about" className="portfolio-section relative mx-auto max-w-[1100px] px-5 md:px-6">
         <FadeIn>
-          <SectionTitle>{t("关于我")}</SectionTitle>
+          <SectionTitle eyebrow="01 / PROFILE">{t("关于我")}</SectionTitle>
         </FadeIn>
 
         <div className="mt-9 md:mt-12 grid md:grid-cols-[1fr_1.1fr] gap-8 md:gap-16">
-          {/* 左：档案（Uiverse adamgiebl 新拟态卡） */}
+          {/* 左：个人档案 */}
           <FadeIn>
             <div
-              className="rounded-[22px] md:rounded-[30px] p-6 md:p-10"
-              style={{
-                background: "#f4f4f2",
-                boxShadow:
-                  "14px 14px 32px #e0e0de, -14px -14px 32px #ffffff"
-              }}
+              className="profile-panel p-6 md:p-9"
             >
               <div className="text-[11px] tracking-[0.25em] text-neutral-400 mb-2">
                 {t("个人档案")}
@@ -1834,11 +1285,11 @@ export function PortfolioSections() {
       </section>
 
       {/* 专业技能 */}
-      <section id="skills" className="relative mx-auto max-w-[1100px] px-5 md:px-6 pt-24 md:pt-48">
+      <section id="skills" className="portfolio-section relative mx-auto max-w-[1100px] px-5 md:px-6">
         <FadeIn>
-          <SectionTitle>{t("专业技能")}</SectionTitle>
+          <SectionTitle eyebrow="02 / TOOLKIT">{t("专业技能")}</SectionTitle>
         </FadeIn>
-        <div className="mt-10 md:mt-20">
+        <div className="mt-10 md:mt-12">
           <SkillsStickyShowcase />
         </div>
       </section>
@@ -1846,15 +1297,15 @@ export function PortfolioSections() {
       {/* 项目经历 */}
       <section
         id="projects"
-        className="relative mx-auto max-w-[1100px] px-5 md:px-6 pt-24 md:pt-48"
+        className="portfolio-section relative mx-auto max-w-[1100px] px-5 md:px-6"
       >
         <FadeIn>
-          <SectionTitle>{t("精选项目")}</SectionTitle>
+          <SectionTitle eyebrow="03 / SELECTED WORK">{t("精选项目")}</SectionTitle>
           <p className="mt-5 max-w-2xl text-sm md:text-base leading-relaxed text-neutral-500">
             {t("从业务约束到技术选择，展开查看每个方案的实现思路与边界。")}
           </p>
         </FadeIn>
-        <div className="mt-10 md:mt-20 grid gap-5 md:gap-8">
+        <div className="mt-10 md:mt-12 grid gap-16 md:gap-24">
           {PROJECTS.map((p) => (
             <ProjectCard key={p.idx} data={p} />
           ))}
@@ -1864,36 +1315,14 @@ export function PortfolioSections() {
       {/* 荣誉证书 */}
       <section
         id="honors"
-        className="relative mx-auto max-w-[1100px] px-5 md:px-6 pt-24 md:pt-48"
+        className="portfolio-section relative mx-auto max-w-[1100px] px-5 md:px-6"
       >
         <FadeIn>
-          <SectionTitle>{t("荣誉证书")}</SectionTitle>
+          <SectionTitle eyebrow="04 / RECOGNITION">{t("荣誉证书")}</SectionTitle>
         </FadeIn>
         <div className="mt-10 md:mt-16 grid sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
           {HONORS.map((h, i) => (
             <HonorFlipCard key={h.title} data={h} i={i} />
-          ))}
-        </div>
-      </section>
-
-      {/* 与我合作 */}
-      <section
-        id="collab"
-        className="relative mx-auto max-w-[1100px] px-5 md:px-6 pt-24 md:pt-48"
-      >
-        <div className="grid md:grid-cols-[auto_1fr] gap-6 md:gap-16 items-end">
-          <FadeIn>
-            <SectionTitle>{t("与我合作")}</SectionTitle>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <p className="text-base md:text-lg text-neutral-600 leading-relaxed max-w-xl">
-              {t("以 Java 后端开发为主，关注接口设计、数据库缓存与异步任务处理，同时探索 AI Agent 工程。欢迎后端开发机会与项目交流，目前可随时到岗。")}
-            </p>
-          </FadeIn>
-        </div>
-        <div className="collab-card-strip mt-8 md:mt-16 grid grid-cols-3 gap-2 md:gap-8">
-          {COLLAB_CARDS.map((c, i) => (
-            <CollabItem key={c.title} data={c} i={i} />
           ))}
         </div>
       </section>
@@ -1905,7 +1334,7 @@ export function PortfolioSections() {
       <footer className="relative mt-24 md:mt-32 border-t border-black/5">
         <div className="mx-auto max-w-[1100px] px-5 md:px-6 py-8 md:py-10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500 tracking-wider">
           <span>{t("© 2026 杜泽民. ALL RIGHTS RESERVED.")}</span>
-          <span>{t("Designed & Built with 黑白高级感")}</span>
+          <span>Java / Backend / AI Agent</span>
         </div>
       </footer>
     </PortfolioHighlightBackground>
@@ -1921,7 +1350,7 @@ function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative mx-auto max-w-[1100px] px-5 md:px-6 pt-24 md:pt-48 pb-20 md:pb-24"
+      className="portfolio-section relative mx-auto max-w-[1100px] px-5 md:px-6 pb-8 md:pb-12"
     >
       {/* 极淡几何装饰 */}
       <svg
@@ -1948,7 +1377,7 @@ function ContactSection() {
       </svg>
 
       <FadeIn>
-        <SectionTitle>{t("联系我")}</SectionTitle>
+        <SectionTitle eyebrow="05 / GET IN TOUCH">{t("联系我")}</SectionTitle>
       </FadeIn>
 
       <FadeIn delay={0.1}>
@@ -1956,6 +1385,16 @@ function ContactSection() {
           {t("希望加入重视工程实践的团队，围绕 Java 后端和 AI 应用，把接口、数据与任务流程做扎实。欢迎通过邮件或表单与我交流。")}
         </p>
       </FadeIn>
+
+      <div className="contact-capabilities">
+        {COLLAB_CARDS.map((card) => (
+          <div key={card.title}>
+            <span className="contact-capability-icon">{card.icon}</span>
+            <h3>{t(card.title)}</h3>
+            <p>{t(card.desc)}</p>
+          </div>
+        ))}
+      </div>
 
       <div className="mt-10 md:mt-14 grid md:grid-cols-[1.1fr_1fr] gap-10 md:gap-20">
         {/* 左：信息 */}
@@ -2035,7 +1474,7 @@ function ContactSection() {
 
         {/* 右：表单 */}
         <FadeIn delay={0.12}>
-          <div className="glass-card p-6 md:p-10">
+          <div className="contact-form-panel p-6 md:p-9">
             <div className="text-[11px] tracking-[0.25em] text-neutral-500 mb-6">
               {t("快速联系")}
             </div>

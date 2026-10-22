@@ -21,6 +21,28 @@ const LangContext = createContext<LangCtx>({
 });
 
 export const TR: Record<string, string> = {
+  // Hero and project architecture illustrations
+  "你好，我是杜泽民": "Hi, I'm Zemin Du",
+  "AI 应用与 Agent 工程实践": "AI Applications & Agent Engineering",
+  "围绕接口、数据与异步任务构建后端，探索 AI Agent 的工具调用与协作。":
+    "Building backend services around APIs, data and asynchronous tasks, while exploring tool use and collaboration in AI Agents.",
+  "查看项目": "Explore Projects",
+  "开放工作机会 · 随时到岗": "Open to Work · Available Now",
+  "个人作品集": "Personal Portfolio",
+  "架构示意": "Architecture schematic",
+  "逐行读取发券名单": "Read recipient lists row by row",
+  "原子校验与批次暂存": "Atomic checks and batch staging",
+  "异步分发与消费重试": "Async distribution and retries",
+  "条件更新与唯一约束": "Conditional writes and uniqueness",
+  "理解任务，选择行动": "Understand the task, choose an action",
+  "读取、搜索、编辑、命令": "Read, search, edit and run commands",
+  "结果回写与上下文管理": "Write back results and manage context",
+  "可靠性贯穿链路": "Reliability across the pipeline",
+  "任务进度可追踪": "Track task progress",
+  "消息消费幂等": "Idempotent consumption",
+  "落库唯一约束": "Database uniqueness",
+  "工具结果回写上下文，进入下一轮决策": "Feed tool results into context for the next decision",
+  "会话持久化": "Session persistence",
   // Navigation and section headings
   "首页": "Home",
   "关于": "About",
